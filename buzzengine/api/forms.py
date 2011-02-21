@@ -8,7 +8,7 @@ __email__     = "contact@alexn.org"
 import re
 
 from django import newforms as forms
-from buzzengine import models
+from buzzengine.api import models
 
 
 class NewCommentForm(forms.Form):
@@ -20,7 +20,6 @@ class NewCommentForm(forms.Form):
     author_url   = forms.URLField(required=False)
     
     comment = forms.CharField(required=True)
-
 
     def save(self):
         data = self.clean_data

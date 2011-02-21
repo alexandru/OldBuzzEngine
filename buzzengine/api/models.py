@@ -5,6 +5,8 @@ __author__    = "Alexandru Nedelcu"
 __email__     = "contact@alexn.org"
 
 
+import hashlib
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 
@@ -22,6 +24,14 @@ class Author(db.Model):
     url   = db.StringProperty(required=False)
 
     created_at = db.DateTimeProperty(auto_now_add=True)
+
+    @property
+    def gravatar_url(self):
+        email = self.email.strip()
+        md5 = hashlib.md5()    
+        md5.update(email)
+        email = md5.hexdigest()
+        return "http://www.gravatar.com/avatar/" + email + ".jpg?s=100&d=mm"
 
 
 class Comment(db.Model):

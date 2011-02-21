@@ -6,9 +6,9 @@ __email__     = "contact@alexn.org"
 
 
 from django.conf.urls.defaults import *
+from buzzengine.api import views 
 
 urlpatterns = patterns('',
-    (r'^api/', include('buzzengine.api.urls_api'))
+    (r'^comment/$', views.comment_list),
+    (r'^comment/create/$', views.comment_create),
 )
-
-

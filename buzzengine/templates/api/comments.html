@@ -1,0 +1,17 @@
+{% for obj in comments %}
+<div class="comment-item">
+  <img src="{{ obj.author.gravatar_url }}" width="100" height="100" />
+
+  <div class="content">
+    <div class="date">{{ obj.created_at|date }}</div>
+    <div class="content">{{ obj.comment }}</div>
+  </div>
+</div>
+{% endfor %}
+
+
+<form>
+  {{ form.as_p }}
+
+  <input type="submit" value="Send Comment" />
+</form>

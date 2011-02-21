@@ -5,16 +5,13 @@ __author__    = "Alexandru Nedelcu"
 __email__     = "contact@alexn.org"
 
 
-import json
+import json, hashlib
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
-from buzzengine.forms import NewCommentForm
-from buzzengine import models
+from buzzengine.api.forms import NewCommentForm
+from buzzengine.api import models
 
-def hello(request):
-    return HttpResponse("Hello World")
-        
 
 def comment_create(request):
     if request.method != 'GET':
@@ -33,18 +30,26 @@ def comment_create(request):
 
 
 def comment_list(request):
-    url = request.REQUEST.get('article_url')    
-    
-    if not url:
+    url = request.REQUEST.get('article_url') or request.META.get('HTTP_REFERER')
+
+    if not url:        
         resp = HttpResponse(json.dumps({'article_url': ['This field is required.']}, indent=4), mimetype='text/plain')
         resp.status_code = 400
-        return resp
+        return resp    
     
     article = models.Article.get_by_key_name(url)
     if not article:
         raise Http404
 
     comments = models.Comment.gql("WHERE article = :1", article)    
-    comments = [ {'comment': c.comment, "author": { "name": c.author.name, 'url': c.author.url }} for c in comments ]
 
-    return HttpResponse(json.dumps(comments, indent=4), mimetype="text/plain")
+    is_json = not request.META['HTTP_ACCEPT'].find("html")
+    if is_json:
+        comments = [ {'comment': c.comment, "author": { "name": c.author.name, 'url': c.author.url }} for c in comments ]
+        return HttpResponse(json.dumps(comments, indent=4), mimetype="text/plain")
+
+
+    form = NewCommentForm()
+    return render_to_response("api/comments.html", {'comments': comments, 'form': form})
+
+
