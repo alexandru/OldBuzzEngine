@@ -16,4 +16,9 @@ too hard to optimize and just provides too much. All I need is:
 - Moderation with Askimet and/or manual approvals
 - Fast, light
 
+TheBuzzEngine is an implementation for the above (having control over
+the source-code is gratifying); and it runs on Google's App Engine,
+which is both free of charge (for me, as I won't exceed the free
+quota) and infinitely scalable (at least for this type of problem).
+
 I just started working on it. Work in progress.
