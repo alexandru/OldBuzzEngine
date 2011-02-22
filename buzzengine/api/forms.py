@@ -12,14 +12,14 @@ from buzzengine.api import models
 
 
 class NewCommentForm(forms.Form):
-    article_url = forms.URLField(required=True)
-    article_title = forms.CharField(required=False)
+    article_url   = forms.URLField(required=True,   widget=forms.HiddenInput)
+    article_title = forms.CharField(required=False, widget=forms.HiddenInput)
 
-    author_email = forms.EmailField(required=True)
-    author_name  = forms.CharField(required=True)
-    author_url   = forms.URLField(required=False)
+    author_name  = forms.CharField(required=True,  label="Name")
+    author_email = forms.EmailField(required=True, label="Email")
+    author_url   = forms.URLField(required=False,  label="URL")
     
-    comment = forms.CharField(required=True)
+    comment = forms.CharField(required=True, widget=forms.Textarea(attrs={'cols': 30, 'rows': 3}))
 
     def save(self):
         data = self.clean_data

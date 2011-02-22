@@ -31,7 +31,7 @@ class Author(db.Model):
         md5 = hashlib.md5()    
         md5.update(email)
         email = md5.hexdigest()
-        return "http://www.gravatar.com/avatar/" + email + ".jpg?s=100&d=mm"
+        return "http://www.gravatar.com/avatar/" + email + ".jpg?s=80&d=mm"
 
 
 class Comment(db.Model):

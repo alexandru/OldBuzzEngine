@@ -8,7 +8,7 @@ __email__     = "contact@alexn.org"
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-    (r'^api/', include('buzzengine.api.urls_api'))
+    (r'^api/', include('buzzengine.api.urls'))
 )
 
 
