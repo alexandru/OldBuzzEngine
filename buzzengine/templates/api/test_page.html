@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="/static/css/comments.css" rel="stylesheet" type="text/css" />
+    <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.5.min.js"></script>
+    <script language="javascript" type="text/javascript">
+      function decorate_form(html) {
+	  if (html) 
+	      $('#comments').html(html);
+
+	  setTimeout(function () {
+	      $('#comments form input[name=article_url]').attr('value', window.location + '');
+	      $('#comments form input[name=article_title]').attr('value', "Lorem Ipsum");
+
+	      $('#comments form').submit(function (e) {
+		  e.preventDefault();
+		  
+		  $.ajax({
+		      url: '/api/comments/',
+		      type: 'POST',
+		      dataType: 'html',
+		      data: $('#comments form').serialize(),
+		      success: function (data) {
+			  decorate_form(data);
+		      },
+		      failure: function (data) {
+			  decorate_form(data);
+		      },
+		  });
+	      });
+	  }, 0);
+      }
+
+      $(function () {
+	  $.ajax({
+	      url: '/api/comments/',
+	      type: 'GET',
+	      dataType: 'html',
+	      success: function (data) {
+		  decorate_form(data);
+	      }
+	  });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="content">
+      Lorem Ipsum is simply dummy text of the printing and typesetting
+      industry. Lorem Ipsum has been the industry's standard dummy
+      text ever since the 1500s, when an unknown printer took a galley
+      of type and scrambled it to make a type specimen book. It has
+      survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was
+      popularised in the 1960s with the release of Letraset sheets
+      containing Lorem Ipsum passages, and more recently with desktop
+      publishing software like Aldus PageMaker including versions of
+      Lorem Ipsum.
+    </div>
+
+    <div id="comments">      
+    </div>
+  </body>
+</html>
