@@ -1,6 +1,17 @@
 About
 =======
 
+TheBuzzEngine is a simple commenting system, designed for Google App
+Engine, as a replacement for DISQUS and similar services.
+
+Working Example
+---------------
+
+[http://alexn.org/blog/2011/03/13/comments-up-and-running.html](http://alexn.org/blog/2011/03/13/comments-up-and-running.html)
+
+Details
+=======
+
 I recently redesigned my homepage (at [alexn.org](http://alexn.org/)),
 deploying it with the help of the Jekyll static site generator and
 GitHub Pages.
@@ -48,7 +59,3 @@ Integration with Askimet + moderation interface are missing for
 now. Myself I'm relying on the App Engine's own admin interface, but
 it is suboptimal and I'm going to improve this.
 
-Working Example
-===============
-
-[http://alexn.org/blog/2011/03/13/comments-up-and-running.html](http://alexn.org/blog/2011/03/13/comments-up-and-running.html)
