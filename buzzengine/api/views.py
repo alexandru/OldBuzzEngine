@@ -5,7 +5,9 @@ __author__    = "Alexandru Nedelcu"
 __email__     = "contact@alexn.org"
 
 
-import json, hashlib
+import hashlib
+
+from django.utils import simplejson as json
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
@@ -52,7 +54,7 @@ def _comment_create(request, article_url):
     response = HttpResponseRedirect("/api/comments/")
 
     # set tracking cookie
-    response.set_cookie("author", value=new_comment.author.email_hash, max_age=60*60*24*356, domain=settings.MAIN_DOMAIN)
+    response.set_cookie("author", value=new_comment.author.email_hash, max_age=60*60*24*356, domain=settings.ROOT_DOMAIN)
     return response
 
 
@@ -75,11 +77,11 @@ def _comment_list(request, article_url, form=None):
         data['author_url']   = request.author.url
 
     form = form or NewCommentForm(initial=data)
-    return render_to_response("api/comments.html", {'comments': comments, 'form': form})
+    return render_to_response("api/comments.html", {'comments': comments, 'form': form, 'API_DOMAIN': settings.API_DOMAIN})
 
 
 def test_page(request):
-    return render_to_response("api/test_page.html")
+    return render_to_response("api/test_page.html", { 'API_DOMAIN': settings.API_DOMAIN })
 
 
 def crossdomain_xml(request):

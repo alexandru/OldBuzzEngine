@@ -1,67 +1,71 @@
 {% for obj in comments %}
-<div class="comment-item {% cycle even,odd %}">
-  <img src="{{ obj.author.gravatar_url }}" width="80" height="80" />
+<div class="comment-row {% cycle even,odd %}">
+  <div class="comment-item {% cycle even,odd %}">
+    <img src="{{ obj.author.gravatar_url }}" width="80" height="80" />
 
-  <div class="content">
-    <div class="author">
-      <span class="author_name">
-	{% if obj.author.url %}<a target="_blank" href="{{ obj.author.url }}">{% endif %}
-        {{ obj.author.name }}
-	{% if obj.author.url %}</a>{% endif %}
-      </span> 
-      on 
-      <span class="date">{{ obj.created_at|date }}</span>
-    </div>
-    <div class="comment">{{ obj.comment }}</div>
-  </div>  
+    <div class="content">
+      <div class="author">
+	<span class="author_name">
+	  {% if obj.author.url %}<a target="_blank" href="{{ obj.author.url }}">{% endif %}
+	  {{ obj.author.name }}
+	  {% if obj.author.url %}</a>{% endif %}
+	</span> 
+	on 
+	<span class="date">{{ obj.created_at|date }}</span>
+      </div>
+      <div class="comment">{{ obj.comment }}</div>
+    </div>  
+  </div>
 </div>
 {% endfor %}
 
-<form>
-  {% if form.errors %}
-  <div class="errornote">Cannot send comment. Please correct the errors below!</div>
-  {% endif %}
-
-  {{ form.article_url }}
-  {{ form.article_title }}
-
-  <div class="field required">
-    <label for="author_name">Name:</label>
-    {{ form.author_name }}
-
-    {% if form.author_name.errors %}
-    {{ form.author_name.errors }}
+<div class="form-row">
+  <form action="http://{{ API_DOMAIN }}/api/comments/">
+    {% if form.errors %}
+    <div class="errornote">Cannot send comment. Please correct the errors below!</div>
     {% endif %}
-  </div>
 
-  <div class="field required">
-    <label for="author_email">Email:</label>
-    {{ form.author_email }}
-    <span class="help">Your email is safe, it won't get published</span>
+    {{ form.article_url }}
+    {{ form.article_title }}
 
-    {% if form.author_email.errors %}
-    {{ form.author_email.errors }}
-    {% endif %}
-  </div>
+    <div class="field required">
+      <label for="author_name">Name:</label>
+      {{ form.author_name }}
 
-  <div class="field">
-    <label for="author_url">URL:</label>
-    {{ form.author_url }}
+      {% if form.author_name.errors %}
+      {{ form.author_name.errors }}
+      {% endif %}
+    </div>
 
-    {% if form.author_url.errors %}
-    {{ form.author_url.errors }}
-    {% endif %}
-  </div>
+    <div class="field required">
+      <label for="author_email">Email:</label>
+      {{ form.author_email }}
+      <span class="help">Your email is safe, it won't get published</span>
 
-  <div class="field required">
-    <label for="comment">Comment:</label>
-    {{ form.comment }}
-    <span class="help">No HTML allowed, just plain text.</span>
+      {% if form.author_email.errors %}
+      {{ form.author_email.errors }}
+      {% endif %}
+    </div>
 
-    {% if form.comment.errors %}
-    {{ form.comment.errors }}
-    {% endif %}
-  </div>
+    <div class="field">
+      <label for="author_url">URL:</label>
+      {{ form.author_url }}
 
-  <input type="submit" value="Send Comment" class="button" />
-</form>
+      {% if form.author_url.errors %}
+      {{ form.author_url.errors }}
+      {% endif %}
+    </div>
+
+    <div class="field required">
+      <label for="comment">Comment:</label>
+      {{ form.comment }}
+      <span class="help">No HTML allowed, just plain text.</span>
+
+      {% if form.comment.errors %}
+      {{ form.comment.errors }}
+      {% endif %}
+    </div>
+
+    <input type="submit" value="Send Comment" class="button" />
+  </form>
+</div>

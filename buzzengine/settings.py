@@ -16,5 +16,5 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'buzzengine.urls'
 
-# MAIN_DOMAIN=".thebuzzengine.com"
-MAIN_DOMAIN=None
+ROOT_DOMAIN="alexn.org"
+API_DOMAIN="thebuzzengine.appspot.com"

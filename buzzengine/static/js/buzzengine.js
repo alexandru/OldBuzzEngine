@@ -46,11 +46,14 @@
 	    }
 	}
 
-	var flproxy = new flensed.flXHR({ autoUpdatePlayer:false, 
-					  instanceId:"myproxy1", 
-					  xmlResponseText:false, 
-					  onreadystatechange:handle_load, 
-					  loadPolicyURL:"/static/load-policy.xml" });	
+	var flproxy = new flensed.flXHR({ 
+	    autoUpdatePlayer:false, 
+	    instanceId:"myproxy1", 
+	    xmlResponseText:false, 
+	    onreadystatechange:handle_load, 
+	    loadPolicyURL: "http://" + jQuery('#comments').attr('data-domain') + "/static/load-policy.xml"
+	});
+
 	flproxy.open(type, url);
 	flproxy.send(data);
     }
@@ -76,7 +79,7 @@
 
 	if (!xhr) {
 	    if (typeof flensed == 'undefined') {
-		include_js("/static/js/flXHR/flXHR.js", function () {
+		include_js("http://" + jQuery('#comments').attr('data-domain') + "/static/js/flXHR/flXHR.js", function () {
 		    _ajax_with_flxhr(options);
 		});
 	    }
@@ -112,7 +115,7 @@
 		e.preventDefault();
 		
 		ajax({
-		    url: '/api/comments/',
+		    url: jQuery(this).attr('action'),
 		    type: 'POST',
 		    data: jQuery('#comments form').serialize(),
 		    success: function (data) {
@@ -129,7 +132,7 @@
 
     function execute_on_load() {
 	ajax({
-	    url: '/api/comments/',
+	    url: "http://" + jQuery('#comments').attr('data-domain') + "/api/comments/",
 	    type: 'GET',
 	    success: function (data) {
 		decorate_form(data);
