@@ -69,7 +69,7 @@ class Comment(db.Model):
             article = Article.get_by_key_name(article_url)
             if article:
                 comments = Comment.gql("WHERE article = :1", article)
-                comments = [ {'comment': c.comment, "author": { "name": c.author.name, 'url': c.author.url, 'email': c.author.email, 'gravatar_url': c.author.gravatar_url }} for c in comments ]
+                comments = [ {'comment': c.comment, 'created_at': c.created_at, "author": { "name": c.author.name, 'url': c.author.url, 'email': c.author.email, 'gravatar_url': c.author.gravatar_url }} for c in comments ]
             else:
                 comments = []
 

@@ -1,6 +1,6 @@
 import os
 
-DEBUG = False
+DEBUG = True
 ROOT_PATH = os.path.dirname(__file__)
 
 MIDDLEWARE_CLASSES = (

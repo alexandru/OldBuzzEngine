@@ -4,7 +4,7 @@
 __author__    = "Alexandru Nedelcu"
 __email__     = "alex@magnolialabs.com"
 
-
+from django.conf import settings
 from buzzengine.api.models import Author
 
 class TrackingMiddleware:
@@ -18,9 +18,9 @@ class TrackingMiddleware:
 
 class HttpControlMiddleware(object):
     def process_response(self, request, response):
-        response['Access-Control-Allow-Origin'] = "*"
+        response['Access-Control-Allow-Origin'] = "http://" + settings.ROOT_DOMAIN
         response['Access-Control-Allow-Credentials'] = 'true'
         response['Access-Control-Allow-Headers'] = 'Content-Type, *'
-        response['Access-Control-Allow-Methods'] = 'GET, POST'
+        response['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
         response['Access-Control-Max-Age'] = '111111'
         return response

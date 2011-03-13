@@ -35,7 +35,7 @@ class NewCommentForm(forms.Form):
         author_key   = author_email + author_name
 
         author = models.Author.get_or_insert(author_key, email=author_email, name=author_name)
-        if author.url != author_url:
+        if author.url != author_url and author_url:
             author.url = author_url
             author.put()
 

@@ -97,6 +97,9 @@
 	    }
 
 	    xhr.open(type, url, true);
+	    try {
+		xhr.withCredentials = true;
+	    } catch(e) {};
 	    xhr.onload  = function (e) { handle_load(e.target) };
 	    xhr.onerror = function (e) { handle_load(e.target) };
 	    xhr.send(data);

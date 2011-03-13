@@ -7,6 +7,7 @@ __email__     = "contact@alexn.org"
 
 import hashlib
 
+from datetime import datetime, timedelta
 from django.utils import simplejson as json
 
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -18,6 +19,9 @@ from buzzengine.api import models
 
 def comments(request):
     url = request.REQUEST.get('article_url') or request.META.get('HTTP_REFERER')
+    if not url:
+        raise Http404
+
     if url.rfind('#') > 0:
         url = url[:url.rfind('#')]
 
@@ -54,7 +58,8 @@ def _comment_create(request, article_url):
     response = HttpResponseRedirect("/api/comments/")
 
     # set tracking cookie
-    response.set_cookie("author", value=new_comment.author.email_hash, max_age=60*60*24*356, domain=settings.ROOT_DOMAIN)
+    one_year = datetime.now() + timedelta(days=365)
+    response.set_cookie("author", value=new_comment.author.email_hash, expires=one_year, domain=settings.API_DOMAIN)
     return response
 
 
