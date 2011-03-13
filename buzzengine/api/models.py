@@ -12,7 +12,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 
 
-COMMENTS_EXP_SECS = 60 * 60 * 24 * 7 * 4 # 4 weeks
+CACHE_EXP_SECS = 60 * 60 * 24 * 7 * 4 # 4 weeks
 
 
 class Article(db.Model):
@@ -33,9 +33,11 @@ class Author(db.Model):
         email = self.email.strip()
         md5 = hashlib.md5()    
         md5.update(email)
-        email = md5.hexdigest()
-        self.email_hash = email
-        return super(Author, self).put()
+        authorhash = md5.hexdigest()
+        self.email_hash = authorhash
+        obj = super(Author, self).put()
+        memcache.delete(authorhash, namespace="authors")
+        return obj
 
     def get_email_hash(self):
         if not self.email_hash:
@@ -45,6 +47,15 @@ class Author(db.Model):
     @property
     def gravatar_url(self):
         return "http://www.gravatar.com/avatar/" + self.get_email_hash() + ".jpg?s=80&d=mm"
+
+    @classmethod
+    def get_by_hash(self, authorhash):
+        author = memcache.get(authorhash, namespace="authors")
+        if not author:
+            author = Author.gql("WHERE email_hash = :1", authorhash)[:1]            
+            author = author[0] if author else None
+            memcache.set(authorhash, author, time=CACHE_EXP_SECS, namespace='authors')
+        return author
 
 
 class Comment(db.Model):
@@ -63,7 +74,7 @@ class Comment(db.Model):
 
     @classmethod
     def get_comments(self, article_url):
-        comments = memcache.get(article_url)    
+        comments = memcache.get(article_url, namespace="comments")
 
         if not comments:
             article = Article.get_by_key_name(article_url)
@@ -73,6 +84,6 @@ class Comment(db.Model):
             else:
                 comments = []
 
-            memcache.set(article_url, comments, time=COMMENTS_EXP_SECS, namespace='comments')
+            memcache.set(article_url, comments, time=CACHE_EXP_SECS, namespace='comments')
 
         return comments

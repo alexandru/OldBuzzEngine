@@ -11,8 +11,7 @@ class TrackingMiddleware:
     def process_request(self, request):        
         authorhash = request.COOKIES.get('author')
         if authorhash:
-            author = Author.gql("WHERE email_hash = :1", authorhash)[:1]            
-            request.author = author[0] if author else None
+            request.author = Author.get_by_hash(authorhash)
         else:
             request.author = None
 
