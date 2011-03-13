@@ -104,6 +104,9 @@
     font-weight: bold;
     color: #9F3737;        
 }
+#comments .loader {
+    margin-left: 80px;
+}
 #comments .button {
     margin-left: 80px;
     width: 200px;

@@ -116,7 +116,10 @@
 
 	    jQuery('#comments form').submit(function (e) {
 		e.preventDefault();
-		
+
+		jQuery('#comments .loader').show();
+		jQuery('#comments .button').hide();
+
 		ajax({
 		    url: jQuery(this).attr('action'),
 		    type: 'POST',
