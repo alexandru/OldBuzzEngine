@@ -7,8 +7,12 @@ __email__     = "contact@alexn.org"
 
 import hashlib
 
+from google.appengine.api import memcache
 from google.appengine.ext import webapp
 from google.appengine.ext import db
+
+
+COMMENTS_EXP_SECS = 60 * 60 * 24 * 7 * 4 # 4 weeks
 
 
 class Article(db.Model):
@@ -49,5 +53,26 @@ class Comment(db.Model):
     comment = db.TextProperty(required=True)
 
     created_at = db.DateTimeProperty(auto_now_add=True)
-    updated_at = db.DateTimeProperty(auto_now=True)
-    
+    updated_at = db.DateTimeProperty(auto_now=True)    
+
+    def put(self, *args, **kwargs):
+        obj = super(Comment, self).put(*args, **kwargs)
+        # invalidates cache
+        memcache.delete(self.article.url, namespace='comments')
+        return obj
+
+    @classmethod
+    def get_comments(self, article_url):
+        comments = memcache.get(article_url)    
+
+        if not comments:
+            article = Article.get_by_key_name(article_url)
+            if article:
+                comments = Comment.gql("WHERE article = :1", article)
+                comments = [ {'comment': c.comment, "author": { "name": c.author.name, 'url': c.author.url, 'email': c.author.email, 'gravatar_url': c.author.gravatar_url }} for c in comments ]
+            else:
+                comments = []
+
+            memcache.set(article_url, comments, time=COMMENTS_EXP_SECS, namespace='comments')
+
+        return comments

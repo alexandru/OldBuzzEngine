@@ -47,7 +47,6 @@ class NewCommentForm(forms.Form):
         self._comment = comment
 
         return comment
-
         
     @property
     def output(self):

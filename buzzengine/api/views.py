@@ -16,6 +16,8 @@ from buzzengine.api import models
 
 def comments(request):
     url = request.REQUEST.get('article_url') or request.META.get('HTTP_REFERER')
+    if url.rfind('#') > 0:
+        url = url[:url.rfind('#')]
 
     if not url:        
         resp = HttpResponse(json.dumps({'article_url': ['This field is required.']}, indent=4), mimetype='text/plain')
@@ -54,16 +56,13 @@ def _comment_create(request, article_url):
     return response
 
 
-def _comment_list(request, article_url, form=None):
-    article = models.Article.get_by_key_name(article_url)
-    if article:
-        comments = models.Comment.gql("WHERE article = :1", article)
-    else:
-        comments = []    
+def _comment_list(request, article_url, form=None):    
+
+    comments = models.Comment.get_comments(article_url)
 
     is_json = not request.META['HTTP_ACCEPT'].find("html")
     if is_json:
-        comments = [ {'comment': c.comment, "author": { "name": c.author.name, 'url': c.author.url }} for c in comments ]
+        comments = [ {'comment': c['comment'], "author": { "name": c['author']['name'], 'url': c['author']['url'], 'gravatar_url': c['author']['gravatar_url'] }} for c in comments ]
         return HttpResponse(json.dumps(comments, indent=4), mimetype="text/plain")
 
     data = request.POST
@@ -71,9 +70,9 @@ def _comment_list(request, article_url, form=None):
     data['article_url'] = article_url
 
     if request.author and not (data.get('author_name') or data.get('author_email') or data.get('author_url')):
-        data['author_name'] = request.author.name
+        data['author_name']  = request.author.name
         data['author_email'] = request.author.email
-        data['author_url'] = request.author.url
+        data['author_url']   = request.author.url
 
     form = form or NewCommentForm(initial=data)
     return render_to_response("api/comments.html", {'comments': comments, 'form': form})
