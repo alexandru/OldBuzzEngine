@@ -70,7 +70,7 @@
 	} catch(e) {}
 
 	if (xhr && "withCredentials" in xhr){
-	    xhr = xhr;
+	    xhr.withCredentials = "true";
 	} else if (typeof XDomainRequest != "undefined"){
 	    xhr = new XDomainRequest();
 	}
