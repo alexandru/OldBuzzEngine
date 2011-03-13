@@ -19,25 +19,34 @@ class Article(db.Model):
 
 
 class Author(db.Model):
-    email = db.EmailProperty(required=True)
-    name  = db.StringProperty(required=True)
-    url   = db.StringProperty(required=False)
-
+    email      = db.EmailProperty(required=True)
+    name       = db.StringProperty(required=True)
+    url        = db.StringProperty(required=False)    
+    email_hash = db.StringProperty(required=False)
     created_at = db.DateTimeProperty(auto_now_add=True)
 
-    @property
-    def gravatar_url(self):
+    def put(self):
         email = self.email.strip()
         md5 = hashlib.md5()    
         md5.update(email)
         email = md5.hexdigest()
-        return "http://www.gravatar.com/avatar/" + email + ".jpg?s=80&d=mm"
+        self.email_hash = email
+        return super(Author, self).put()
+
+    def get_email_hash(self):
+        if not self.email_hash:
+            self.put()
+        return self.email_hash
+
+    @property
+    def gravatar_url(self):
+        return "http://www.gravatar.com/avatar/" + self.get_email_hash() + ".jpg?s=80&d=mm"
 
 
 class Comment(db.Model):
     article = db.ReferenceProperty(Article, required=True)
     author  = db.ReferenceProperty(Author,  required=True)
-    comment = db.StringProperty(required=True, multiline=True)
+    comment = db.TextProperty(required=True)
 
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)

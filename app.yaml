@@ -3,7 +3,14 @@ version: 1
 runtime: python
 api_version: 1
 
+default_expiration: "30d"
+
 handlers:
+
+- url: /crossdomain.xml
+  static_files: buzzengine/static/load-policy.xml
+  upload:  buzzengine/static/load-policy.xml
+
 - url: /static
   static_dir: buzzengine/static  
 

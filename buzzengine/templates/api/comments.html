@@ -5,7 +5,7 @@
   <div class="content">
     <div class="author">
       <span class="author_name">
-	{% if obj.author.url %}<a href="{{ obj.author.url }}">{% endif %}
+	{% if obj.author.url %}<a target="_blank" href="{{ obj.author.url }}">{% endif %}
         {{ obj.author.name }}
 	{% if obj.author.url %}</a>{% endif %}
       </span> 
