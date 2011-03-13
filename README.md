@@ -22,3 +22,8 @@ which is both free of charge (for me, as I won't exceed the free
 quota) and infinitely scalable (at least for this type of problem).
 
 I just started working on it. Work in progress.
+
+Working Example
+===============
+
+[http://alexn.org/blog/2011/03/13/comments-up-and-running.html](http://alexn.org/blog/2011/03/13/comments-up-and-running.html)
