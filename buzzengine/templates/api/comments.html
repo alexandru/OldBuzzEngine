@@ -6,14 +6,14 @@
     <div class="content">
       <div class="author">
 	<span class="author_name">
-	  {% if obj.author.url %}<a target="_blank" href="{{ obj.author.url }}">{% endif %}
-	  {{ obj.author.name }}
-	  {% if obj.author.url %}</a>{% endif %}
+	  {% if obj.author.url|escape %}<a target="_blank" href="{{ obj.author.url|escape }}">{% endif %}
+	  {{ obj.author.name|escape }}
+	  {% if obj.author.url|escape %}</a>{% endif %}
 	</span> 
 	on 
 	<span class="date">{{ obj.created_at|date }}</span>
       </div>
-      <div class="comment">{{ obj.comment }}</div>
+      <div class="comment">{{ obj.comment|escape|linebreaks }}</div>
     </div>  
   </div>
 </div>
