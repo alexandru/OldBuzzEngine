@@ -23,6 +23,31 @@ quota) and infinitely scalable (at least for this type of problem).
 
 I just started working on it. Work in progress.
 
+Highlights
+----------
+
+Cross-domain requests are needed and are implemented using
+Access-Control-Allow-Origin, if the browser has support for it,
+otherwise it uses a Flash plugin as a fallback (e.g. IExplorer < 8,
+Firefox < 3.5).
+
+The flash plugin is a lot slower / heavyweight and is not loaded
+unless needed.
+
+One problem with Access-Control-Allow-Origin is that IExplorer, by
+means of XDomainRequest, refuses to work with Cookies; which means for
+now user info is not persisted between requests if on IExplorer.
+
+However, workarounds can be implemented of course. I just haven't have
+time for it.
+
+Missing
+-------
+
+Integration with Askimet + moderation interface are missing for
+now. Myself I'm relying on the App Engine's own admin interface, but
+it is suboptimal and I'm going to improve this.
+
 Working Example
 ===============
 
