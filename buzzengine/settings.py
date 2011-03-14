@@ -16,5 +16,3 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'buzzengine.urls'
 
-ROOT_DOMAIN="alexn.org"
-API_DOMAIN="comments.alexn.org"

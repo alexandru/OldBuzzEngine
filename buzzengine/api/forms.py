@@ -16,7 +16,7 @@ class NewCommentForm(forms.Form):
     article_title = forms.CharField(required=False, widget=forms.HiddenInput)
 
     author_name  = forms.CharField(required=True,  label="Name")
-    author_email = forms.EmailField(required=True, label="Email")
+    author_email = forms.EmailField(required=False, label="Email")
     author_url   = forms.URLField(required=False,  label="URL")
     
     comment = forms.CharField(required=True, widget=forms.Textarea(attrs={'cols': 30, 'rows': 3}))
@@ -30,13 +30,22 @@ class NewCommentForm(forms.Form):
         article = models.Article.get_or_insert(article_url, url=article_url, title=article_title)
 
         author_email = data.get('author_email')
-        author_name  = data.get('author_name')
-        author_url   = data.get('author_url')
-        author_key   = author_email + author_name
+        author_name  = data.get('author_name') 
+        author_url   = data.get('author_url')  
+        author_key   = (author_email or '') + author_name
 
-        author = models.Author.get_or_insert(author_key, email=author_email, name=author_name)
+        author = models.Author.get_or_insert(author_key, name=author_name)
+        has_changes = False
+        
         if author.url != author_url and author_url:
             author.url = author_url
+            has_changes = True
+
+        if author_email and author_email != author.email:
+            author.email = author_email
+            has_changes = True
+
+        if has_changes:
             author.put()
 
         comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article)

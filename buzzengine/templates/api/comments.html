@@ -1,3 +1,7 @@
+<div class="data" style="display:none">
+  <span class="current_author">{{ current_author.email_hash }}</span>
+</div>
+
 {% for obj in comments %}
 <div class="comment-row {% cycle even,odd %}">
   <div class="comment-item {% cycle even,odd %}">
@@ -6,9 +10,9 @@
     <div class="content">
       <div class="author">
 	<span class="author_name">
-	  {% if obj.author.url|escape %}<a target="_blank" href="{{ obj.author.url|escape }}">{% endif %}
+	  {% if obj.author.url %}<a target="_blank" href="{{ obj.author.url|escape }}">{% endif %}
 	  {{ obj.author.name|escape }}
-	  {% if obj.author.url|escape %}</a>{% endif %}
+	  {% if obj.author.url %}</a>{% endif %}
 	</span> 
 	on 
 	<span class="date">{{ obj.created_at|date }}</span>
@@ -20,7 +24,7 @@
 {% endfor %}
 
 <div class="form-row">
-  <form action="http://{{ API_DOMAIN }}/api/comments/">
+  <form action="http://{{ API_DOMAIN }}/api/comments/" method="POST">
     {% if form.errors %}
     <div class="errornote">Cannot send comment. Please correct the errors below!</div>
     {% endif %}
@@ -37,7 +41,7 @@
       {% endif %}
     </div>
 
-    <div class="field required">
+    <div class="field">
       <label for="author_email">Email:</label>
       {{ form.author_email }}
       <span class="help">Your email is safe, it won't get published</span>

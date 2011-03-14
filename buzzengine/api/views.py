@@ -55,11 +55,8 @@ def _comment_create(request, article_url):
     new_comment = form.save()
     if is_json:
         response = HttpResponse("OK", mimetype='text/plain')
-    response = HttpResponseRedirect("/api/comments/")
+    response = HttpResponseRedirect("/api/comments/?author=" + new_comment.author.email_hash)
 
-    # set tracking cookie
-    one_year = datetime.now() + timedelta(days=365)
-    response.set_cookie("author", value=new_comment.author.email_hash, expires=one_year, domain=settings.API_DOMAIN)
     return response
 
 
@@ -81,12 +78,14 @@ def _comment_list(request, article_url, form=None):
         data['author_email'] = request.author.email
         data['author_url']   = request.author.url
 
+    comments.sort(lambda a,b: cmp(a['created_at'], b['created_at']))
+
     form = form or NewCommentForm(initial=data)
-    return render_to_response("api/comments.html", {'comments': comments, 'form': form, 'API_DOMAIN': settings.API_DOMAIN})
+    return render_to_response("api/comments.html", {'comments': comments, 'form': form, 'API_DOMAIN': request.API_DOMAIN, 'current_author': request.author})
 
 
 def test_page(request):
-    return render_to_response("api/test_page.html", { 'API_DOMAIN': settings.API_DOMAIN })
+    return render_to_response("api/test_page.html", { 'API_DOMAIN': request.API_DOMAIN })
 
 
 def crossdomain_xml(request):

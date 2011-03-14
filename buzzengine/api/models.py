@@ -23,18 +23,22 @@ class Article(db.Model):
 
 
 class Author(db.Model):
-    email      = db.EmailProperty(required=True)
     name       = db.StringProperty(required=True)
+    email      = db.EmailProperty(required=False)
     url        = db.StringProperty(required=False)    
     email_hash = db.StringProperty(required=False)
     created_at = db.DateTimeProperty(auto_now_add=True)
 
     def put(self):
-        email = self.email.strip()
+        email = self.email and self.email.strip()
+        name  = self.name.strip()
+
         md5 = hashlib.md5()    
-        md5.update(email)
+        md5.update(email or name)
+
         authorhash = md5.hexdigest()
         self.email_hash = authorhash
+
         obj = super(Author, self).put()
         memcache.delete(authorhash, namespace="authors")
         return obj
@@ -45,7 +49,7 @@ class Author(db.Model):
         return self.email_hash
 
     @property
-    def gravatar_url(self):
+    def gravatar_url(self):        
         return "http://www.gravatar.com/avatar/" + self.get_email_hash() + ".jpg?s=80&d=mm"
 
     @classmethod
