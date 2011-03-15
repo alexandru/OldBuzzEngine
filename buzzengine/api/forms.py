@@ -35,6 +35,7 @@ class NewCommentForm(forms.Form):
         author_email = data.get('author_email')
         author_name  = data.get('author_name') 
         author_url   = data.get('author_url')  
+        author_ip    = data.get('author_ip')
         author_key   = (author_email or '') + author_name
 
         author = models.Author.get_or_insert(author_key, name=author_name)
@@ -51,7 +52,7 @@ class NewCommentForm(forms.Form):
         if has_changes:
             author.put()
 
-        comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article, author_ip=self.cleaned_data.get('author_ip'))
+        comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article, author_ip=author_ip)
         comment.put()
 
         params = urllib.urlencode({'article_url': article_url, 'comment_id': comment.key().id()})

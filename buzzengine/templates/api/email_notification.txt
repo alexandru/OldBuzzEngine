@@ -1,5 +1,5 @@
 {{ author.name }} sent you a message on:
-  {{ comment.article_url }}
+{{ article_url }}
 
 {{ comment.comment }}
 

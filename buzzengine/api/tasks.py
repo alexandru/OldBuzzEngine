@@ -27,7 +27,7 @@ def notify(request):
     author = comment.author
 
     tpl = get_template("api/email_notification.txt")
-    ctx = Context({'author': author, 'comment': comment, 'padded': padded, 'API_DOMAIN': request.API_DOMAIN})
+    ctx = Context({'author': author, 'article_url': article_url, 'comment': comment, 'API_DOMAIN': request.API_DOMAIN})
     txt = tpl.render(ctx)
 
     mail.send_mail(
