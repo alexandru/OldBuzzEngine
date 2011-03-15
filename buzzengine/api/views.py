@@ -43,7 +43,9 @@ def comments(request):
 def _comment_create(request, article_url):
     data = request.POST
     data = dict([ (k,data[k]) for k in data.keys() ])
+
     data['article_url'] = article_url
+    data['author_ip']   = _discover_user_ip(request)
 
     is_json = not request.META['HTTP_ACCEPT'].find("html")
 
@@ -89,34 +91,15 @@ def _comment_list(request, article_url, form=None, author=None):
     return render_to_response("api/comments.html", {'comments': comments, 'form': form, 'API_DOMAIN': request.API_DOMAIN, 'current_author': author})
 
 
-def notify(request):
-    comment_id = request.REQUEST.get('comment_id')
-    article_url = request.REQUEST.get('article_url')
-
-    article = models.Article.get_by_key_name(article_url)
-    if not article: raise Http404
-
-    comment_id = int(comment_id)
-    comment = models.Comment.get_by_id(comment_id, parent=article)
-    if not comment: raise Http404        
-
-    padded = comment.comment
-    padded = re.split(r'\r?\n', padded)
-    padded = "\n".join([ "  " + line for line in padded ])
-
-    author = comment.author
-
-    tpl = get_template("api/email_notification.txt")
-    ctx = Context({'author': author, 'comment': comment, 'padded': padded, 'API_DOMAIN': request.API_DOMAIN})
-    txt = tpl.render(ctx)
-
-    mail.send_mail(
-        sender=settings.EMAIL_SENDER,
-        to=settings.ADMIN_EMAIL,
-        subject=author.name + " commented on your blog",
-        body=txt)
-
-    return HttpResponse("Mail sent!")
+def _discover_user_ip(request):
+    # discover IP of user
+    ip = request.META['REMOTE_ADDR']
+    if ip == '127.0.0.1':
+        try:
+            ip = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
+        except:
+            pass
+    return ip
 
 
 def test_page(request):

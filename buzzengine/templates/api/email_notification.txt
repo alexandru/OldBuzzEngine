@@ -1,12 +1,14 @@
-{{ author.name }} sent you a message:
+{{ author.name }} sent you a message on:
+  {{ comment.article_url }}
 
-{{ padded }}
+{{ comment.comment }}
 
 Author info:
 
 - name:  {{ author.name }}
 - email: {{ author.email }}
 - url:   {{ author.url }}
+- ip:    {{ comment.author_ip }}
 
 Administrative options:
 

@@ -20,6 +20,7 @@ class NewCommentForm(forms.Form):
     author_name  = forms.CharField(required=True,  label="Name")
     author_email = forms.EmailField(required=False, label="Email")
     author_url   = forms.URLField(required=False,  label="URL")
+    author_ip    = forms.CharField(required=False)
     
     comment = forms.CharField(required=True, widget=forms.Textarea(attrs={'cols': 30, 'rows': 3}))
 
@@ -50,7 +51,7 @@ class NewCommentForm(forms.Form):
         if has_changes:
             author.put()
 
-        comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article)
+        comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article, author_ip=self.cleaned_data.get('author_ip'))
         comment.put()
 
         params = urllib.urlencode({'article_url': article_url, 'comment_id': comment.key().id()})

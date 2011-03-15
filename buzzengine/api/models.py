@@ -65,9 +65,10 @@ class Author(db.Model):
 
 
 class Comment(db.Model):
-    article = db.ReferenceProperty(Article, required=True)
-    author  = db.ReferenceProperty(Author,  required=True)
-    comment = db.TextProperty(required=True)
+    article   = db.ReferenceProperty(Article, required=True)
+    author    = db.ReferenceProperty(Author,  required=True)
+    comment   = db.TextProperty(required=True)
+    author_ip = db.StringProperty(required=False)
 
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)    
