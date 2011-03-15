@@ -137,7 +137,7 @@
 
 	setTimeout(function () {
 	    jQuery('#comments form input[name=article_url]').attr('value', window.location + '');
-	    jQuery('#comments form input[name=article_title]').attr('value', "Lorem Ipsum");
+	    jQuery('#comments form input[name=article_title]').attr('value', $('title').html());
 
 	    var author = jQuery('#comments .data .current_author').html();
 	    if (author) 
@@ -166,8 +166,14 @@
     }
 
     function execute_on_load() {
+	var author = readCookie("author");
+	author = author ? encodeURI(author) : null;
+
+	var url = "http://" + jQuery('#comments').attr('data-domain') + "/api/comments/";
+	if (author) url += "?author=" + encodeURI(author);
+
 	ajax({
-	    url: "http://" + jQuery('#comments').attr('data-domain') + "/api/comments/",
+	    url: url,
 	    type: 'GET',
 	    success: function (data) {
 		decorate_form(data);

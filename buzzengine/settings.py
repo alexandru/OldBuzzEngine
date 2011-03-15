@@ -16,3 +16,4 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'buzzengine.urls'
 
+SALT="aici98suntdragoni10"

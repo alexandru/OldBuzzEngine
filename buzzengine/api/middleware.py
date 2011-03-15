@@ -8,6 +8,7 @@ import re
 from django.conf import settings
 from buzzengine.api.models import Author
 
+
 class TrackingMiddleware:
     def process_request(self, request):
         authorhash = request.GET.get('author') or request.COOKIES.get('author') 

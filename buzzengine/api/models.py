@@ -5,8 +5,10 @@ __author__    = "Alexandru Nedelcu"
 __email__     = "contact@alexn.org"
 
 
+import random
 import hashlib
 
+from django.conf import settings
 from google.appengine.api import memcache
 from google.appengine.ext import webapp
 from google.appengine.ext import db
@@ -36,11 +38,11 @@ class Author(db.Model):
         md5 = hashlib.md5()    
         md5.update(email or name)
 
-        authorhash = md5.hexdigest()
-        self.email_hash = authorhash
+        email_hash = md5.hexdigest()
+        self.email_hash = email_hash
 
         obj = super(Author, self).put()
-        memcache.delete(authorhash, namespace="authors")
+        memcache.delete(self.email_hash, namespace="authors")
         return obj
 
     def get_email_hash(self):
@@ -53,12 +55,12 @@ class Author(db.Model):
         return "http://www.gravatar.com/avatar/" + self.get_email_hash() + ".jpg?s=80&d=mm"
 
     @classmethod
-    def get_by_hash(self, authorhash):
-        author = memcache.get(authorhash, namespace="authors")
+    def get_by_hash(self, email_hash):
+        author = memcache.get(email_hash, namespace="authors")
         if not author:
-            author = Author.gql("WHERE email_hash = :1", authorhash)[:1]            
+            author = Author.gql("WHERE email_hash = :1", email_hash)[:1]            
             author = author[0] if author else None
-            memcache.set(authorhash, author, time=CACHE_EXP_SECS, namespace='authors')
+            memcache.set(email_hash, author, time=CACHE_EXP_SECS, namespace='authors')
         return author
 
 

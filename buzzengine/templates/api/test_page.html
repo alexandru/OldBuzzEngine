@@ -17,13 +17,13 @@
       Lorem Ipsum.
     </div>
 
-    <div id="comments" data-domain="{{ API_DOMAIN }}"></div>
+    <div id="comments" data-domain="local.livingsocial.com:8080"></div>
     <script language="javascript" type="text/javascript">
       (function() {
           var s = document.createElement('script');
           s.type = 'text/javascript';
           s.async = true;
-          s.src = '/static/js/buzzengine.js';
+          s.src = 'http://local.livingsocial.com:8080/static/js/buzzengine.js';
           var x = document.getElementsByTagName('script')[0];
           x.parentNode.insertBefore(s, x);
       })();      
