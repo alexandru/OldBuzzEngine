@@ -41,6 +41,13 @@ Firefox < 3.5).
 The flash plugin is a lot slower / heavyweight and is not loaded
 unless needed.
 
+App Engine Facilities used thus far:
+
+- datastore
+- memcached
+- tasks queue
+- sending email
+
 Missing
 -------
 
