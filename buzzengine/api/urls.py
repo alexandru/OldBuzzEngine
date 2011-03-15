@@ -10,5 +10,6 @@ from buzzengine.api import views
 
 urlpatterns = patterns('',
     (r'^comments/$', views.comments),
+    (r'^notify/$', views.notify),
     (r'^test/page.html$', views.test_page),
 )

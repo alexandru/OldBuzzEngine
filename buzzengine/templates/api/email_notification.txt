@@ -1,0 +1,19 @@
+{{ author.name }} sent you a message:
+
+{{ padded }}
+
+Author info:
+
+- name:  {{ author.name }}
+- email: {{ author.email }}
+- url:   {{ author.url }}
+
+Administrative options:
+
+- edit:   http://{{ API_DOMAIN }}/admin/edit/?article_url={{ comment.article.article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
+- delete: http://{{ API_DOMAIN }}/admin/delete/?article_url={{ comment.article.article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
+
+Thanks,
+
+--
+TheBuzzEngine

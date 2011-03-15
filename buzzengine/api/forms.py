@@ -9,6 +9,7 @@ import re
 
 from django import newforms as forms
 from buzzengine.api import models
+from google.appengine.api import taskqueue
 
 
 class NewCommentForm(forms.Form):
@@ -50,6 +51,8 @@ class NewCommentForm(forms.Form):
 
         comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article)
         comment.put()
+
+        taskqueue.add(url="/api/notify/", params={'article_url': article_url, 'comment_id': comment.key().id()})
 
         self._author  = author
         self._article = article

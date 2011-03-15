@@ -16,4 +16,7 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'buzzengine.urls'
 
-SALT="aici98suntdragoni10"
+
+ADMIN_EMAIL  = "contact@alexn.org"
+EMAIL_SENDER = "TheBuzzEngine <comments@alexn.org>"
+
