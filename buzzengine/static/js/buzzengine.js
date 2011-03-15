@@ -125,7 +125,7 @@
 	var textareas = form.getElementsByTagName('textarea');
 
 	for (var i=0; i<inputs.length; i++)
-	    allinputs.push(textareas[i]);
+	    allinputs.push(inputs[i]);
 	for (var i=0; i<textareas.length; i++)
 	    allinputs.push(textareas[i]);
 
