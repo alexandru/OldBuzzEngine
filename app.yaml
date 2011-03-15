@@ -15,6 +15,10 @@ handlers:
   static_files: buzzengine/static/load-policy.xml
   upload:  buzzengine/static/load-policy.xml
 
+- url: /favicon.ico
+  static_files: buzzengine/static/images/favicon.ico
+  upload:  buzzengine/static/images/favicon.ico
+
 - url: /static
   static_dir: buzzengine/static  
 

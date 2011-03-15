@@ -18,5 +18,5 @@ ROOT_URLCONF = 'buzzengine.urls'
 
 
 ADMIN_EMAIL  = "contact@alexn.org"
-EMAIL_SENDER = "TheBuzzEngine <comments@alexn.org>"
+EMAIL_SENDER = "TheBuzzEngine <me@alexn.org>"
 

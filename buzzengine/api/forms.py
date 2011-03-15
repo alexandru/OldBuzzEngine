@@ -6,6 +6,7 @@ __email__     = "contact@alexn.org"
 
 
 import re
+import urllib
 
 from django import newforms as forms
 from buzzengine.api import models
@@ -52,7 +53,8 @@ class NewCommentForm(forms.Form):
         comment = models.Comment(parent=article, comment=data.get('comment'), author=author, article=article)
         comment.put()
 
-        taskqueue.add(url="/api/notify/", params={'article_url': article_url, 'comment_id': comment.key().id()})
+        params = urllib.urlencode({'article_url': article_url, 'comment_id': comment.key().id()})
+        taskqueue.add(url="/api/notify/?" + params, method="GET")
 
         self._author  = author
         self._article = article
