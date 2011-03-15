@@ -120,15 +120,19 @@
 	var form = comments.getElementsByTagName('form')[0];
 
 	var parts = new Array();
+	var allinputs = new Array();
 	var inputs = form.getElementsByTagName('input');
 	var textareas = form.getElementsByTagName('textarea');
-	for (var i=0; i<textareas.length; i++)
-	    inputs.push(textareas[i]);
 
-	for (var i=0; i<inputs.length; i++) {
-	    var name = inputs[i].getAttribute('name');
+	for (var i=0; i<inputs.length; i++)
+	    allinputs.push(textareas[i]);
+	for (var i=0; i<textareas.length; i++)
+	    allinputs.push(textareas[i]);
+
+	for (var i=0; i<allinputs.length; i++) {
+	    var name = allinputs[i].getAttribute('name');
 	    if (!name) continue;
-	    var value = inputs[i].value || '';
+	    var value = allinputs[i].value || '';
 	    parts.push(encodeURI(name) + "=" + encodeURI(value));
 	}
 	return parts.join('&');
