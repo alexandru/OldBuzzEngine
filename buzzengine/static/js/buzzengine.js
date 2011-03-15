@@ -121,6 +121,10 @@
 
 	var parts = new Array();
 	var inputs = form.getElementsByTagName('input');
+	var textareas = form.getElementsByTagName('textarea');
+	for (var i=0; i<textareas.length; i++)
+	    inputs.push(textareas[i]);
+
 	for (var i=0; i<inputs.length; i++) {
 	    var name = inputs[i].getAttribute('name');
 	    if (!name) continue;
