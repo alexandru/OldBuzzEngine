@@ -6,8 +6,12 @@
 	return comments.getAttribute('data-domain');
     }
 
+    function type(obj){
+	return Object.prototype.toString.call(obj).match(/^\[object (.*)\]$/)[1]
+    }
+
     function is_iexplorer() { return navigator.userAgent.indexOf('MSIE') !=-1 }
-    function by_id(id){ return (id.constructor != String ? id : document.getElementById(id)) }
+    function by_id(id){ return (type(id) != 'String' ? id : document.getElementById(id)) }
     function show(id) { by_id(id).style.display = 'block' }
     function hide(id) { by_id(id).style.display = 'none' }
 
