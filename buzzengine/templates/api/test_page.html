@@ -19,11 +19,17 @@
 
     <div id="comments" data-domain="{{ API_DOMAIN }}"></div>
     <script language="javascript" type="text/javascript">
+      var BUZZENGINE_PARAMS = {
+	  article_url:   window.location + '',
+	  article_title: document.getElementsByTagName('title').length ?
+	      document.getElementsByTagName('title')[0].innerHTML : null
+      };
+
       (function() {
           var s = document.createElement('script');
           s.type = 'text/javascript';
           s.async = true;
-          s.src = '/static/js/buzzengine.js';
+          s.src = '/static/js/buzzengine.min.js';
           var x = document.getElementsByTagName('script')[0];
           x.parentNode.insertBefore(s, x);
       })();      

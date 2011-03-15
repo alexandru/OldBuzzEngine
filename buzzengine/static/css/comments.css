@@ -4,7 +4,7 @@
     margin-top: 30px;
 
     font-family: Helvetica, Verdana, sans;
-    font-size: 11pt;    
+    font-size: 14px;
 }
 #comments .odd {
     background-color: #F0F0F0;
@@ -51,7 +51,7 @@
 #comments form label {
     float: left;
     display: block;
-    width: 80px;
+    width: 85px;
 
     margin-top: 10px;
     color: #333;
@@ -68,7 +68,7 @@
 }
 #comments form .help {
     display: block;
-    margin-left: 80px;
+    margin-left: 90px;
     color: #666;
     font-size: 12px;
 }
