@@ -7,14 +7,10 @@ Engine, as a replacement for DISQUS and similar services.
 Working Example
 ---------------
 
-[http://alexn.org/blog/2011/03/13/comments-up-and-running.html](http://alexn.org/blog/2011/03/13/comments-up-and-running.html)
+[http://alexn.org/test.html](http://alexn.org/test.html)
 
 Details
 =======
-
-I recently redesigned my homepage (at [alexn.org](http://alexn.org/)),
-deploying it with the help of the Jekyll static site generator and
-GitHub Pages.
 
 I tried to use [Disqus](http://disqus.com) for adding commenting to my
 blog pages; but frankly Disqus kind of sucks, as it is too complex,
@@ -45,13 +41,6 @@ Firefox < 3.5).
 The flash plugin is a lot slower / heavyweight and is not loaded
 unless needed.
 
-One problem with Access-Control-Allow-Origin is that IExplorer, by
-means of XDomainRequest, refuses to work with Cookies; which means for
-now user info is not persisted between requests if on IExplorer.
-
-However, workarounds can be implemented of course. I just haven't have
-time for it.
-
 Missing
 -------
 
@@ -59,3 +48,5 @@ Integration with Askimet + moderation interface are missing for
 now. Myself I'm relying on the App Engine's own admin interface, but
 it is suboptimal and I'm going to improve this.
 
+Only tested in Firefox + Chrome, but should work well in IExplorer and
+older browser. Still, more testing is neeed.
