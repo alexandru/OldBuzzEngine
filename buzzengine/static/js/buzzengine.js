@@ -11,6 +11,22 @@
     }
 
     function is_iexplorer() { return navigator.userAgent.indexOf('MSIE') !=-1 }
+
+    function get_ie_version()
+    // Returns the version of Internet Explorer or a -1
+    // (indicating the use of another browser).
+    {
+	var rv = -1; // Return value assumes failure.
+	if (navigator.appName == 'Microsoft Internet Explorer')
+	{
+	    var ua = navigator.userAgent;
+	    var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+	    if (re.exec(ua) != null)
+		rv = parseFloat( RegExp.$1 );
+	}
+	return rv;
+    }
+
     function by_id(id){ return (type(id) != 'String' ? id : document.getElementById(id)) }
     function show(id) { by_id(id).style.display = 'block' }
     function hide(id) { by_id(id).style.display = 'none' }
@@ -45,11 +61,15 @@
     }
 
     function bind(id, name, handler) { 
-	if (! is_iexplorer())
-	    by_id(id).addEventListener(name, handler, false) 
-	else
-	    by_id(id).addEventListener(name, handler);
+	var elem = by_id(id);
+	if (elem.addEventListener && ! is_iexplorer())
+	    elem.addEventListener(name, handler, false);
+	else if (elem.addEventListener)
+	    elem.addEventListener(name, handler);
+	else if (elem.attachEvent) 
+	    elem.attachEvent('on'+name, handler);
     }
+
     function setClass(id, value) { by_id(id).setAttribute('class', value) };
 
     function get_form_element(options) {
@@ -80,22 +100,6 @@
 	}
     }
 
-    function get_query_param(name) {
-	var loc = window.location + '';
-	var match = loc.match(/^[^?]+[?](.+)$/);
-	if (match && match.length > 1) {
-	    var query = match[1];
-	    var parts = query.split(/[&]/);
-	    for (var i=0; i<parts.length; i++) {
-		var keyval = parts[i].split(/[=]/);		
-		var key = decodeURI(keyval[0]);
-		if (key == name) 
-		    return keyval.length > 1 ? decodeURI(keyval[1]) : '';
-	    }
-	}
-	return '';
-    }
-
     function getElementByClassName(parent_id, cls) {
 	var parent = by_id(parent_id);
 	var elems = parent.getElementsByTagName("*");
@@ -106,19 +110,23 @@
 		return elem;
 	}
     }
+
     function get_article_url() {
 	return BUZZENGINE_PARAMS.article_url || (window.location + '');
     }
+
     function get_article_title() {
 	var title = document.getElementsByTagName('title').length ? document.getElementsByTagName('title')[0].innerHTML : null
 	return BUZZENGINE_PARAMS.article_title || title;
     }
+
     function get_current_author() {
 	var comments = by_id('comments');
 	var data = getElementByClassName(comments, 'data');
 	var current_author = getElementByClassName(data, 'current_author');
 	return current_author.innerHTML;
     }
+
     function serialize_form() {
 	var comments = by_id('comments');
 	var form = comments.getElementsByTagName('form')[0];
@@ -233,12 +241,15 @@
 
 	try {
 	    var xhr = new XMLHttpRequest();
-	} catch(e) {}
+	} catch(e) {}	
+	
+	var is_sane = false;
 
 	if (xhr && "withCredentials" in xhr){
-	    // does nothing else
+	    xhr.open(type, url, true);
 	} else if (typeof XDomainRequest != "undefined"){
 	    xhr = new XDomainRequest();
+	    xhr.open(type, url);
 	}
 	else
 	    xhr = null;
@@ -253,21 +264,24 @@
 		_ajax_with_flxhr(options);
 	}
 	else {
-	    var handle_load = function (XHRobj) {
-		if (XHRobj.readyState == 4) {
-		    if (XHRobj.status == 200 && success)
+	    var handle_load = function (event_type) {
+		return function (XHRobj) {
+		    // stupid!!!
+		    var XHRobj = is_iexplorer() ? xhr : XHRobj;
+
+		    if (event_type == 'load' && (is_iexplorer() || XHRobj.readyState == 4) && success)
 			success(XHRobj.responseText, XHRobj);
 		    else if (error)
 			error(XHRobj);
 		}
-	    }
+	    };
 
-	    xhr.open(type, url, true);
 	    try {
 		xhr.withCredentials = true;
 	    } catch(e) {};
-	    xhr.onload  = function (e) { handle_load(e.target) };
-	    xhr.onerror = function (e) { handle_load(e.target) };
+
+	    xhr.onload  = function (e) { handle_load('load')(is_iexplorer() ? e : e.target) };
+	    xhr.onerror = function (e) { handle_load('error')(is_iexplorer() ? e : e.target) };
 	    xhr.send(data);
 	}
     }
@@ -275,6 +289,13 @@
     function decorate_form(html) {
 	if (html)
 	    document.getElementById("comments").innerHTML = html;
+
+	if (is_iexplorer() && get_ie_version() < 8) {
+	    // form is not allowed on older IExplorer versions
+	    // suck it up
+	    hide(document.getElementById('comments').getElementsByTagName('form')[0]);
+	    return;
+	}
 
 	setTimeout(function () {
 	    get_form_element({name:'article_url'}).setAttribute('value', get_article_url());
@@ -284,14 +305,19 @@
 	    if (author) 
 		createCookie("author", author, 365);
 
-	    bind(by_id('comments').getElementsByTagName('form')[0], 'submit', function (e) {
-		e.preventDefault();
+	    var form = by_id('comments').getElementsByTagName('form')[0];
+
+	    bind(form, 'submit', function (e) {
+		if (is_iexplorer())
+		    e.returnValue = false;
+		else if (e.preventDefault)
+		    e.preventDefault();
 
 		show( getElementByClassName('comments', 'loader') );
 		hide( getElementByClassName('comments', 'button') );
 
 		ajax({
-		    url: this.getAttribute('action'),
+		    url: form.getAttribute('action'),
 		    type: 'POST',
 		    data: serialize_form(),
 		    success: function (data) {
@@ -299,7 +325,6 @@
 		    },
 		    error: function (resp) {
 			getElementByClassName('comments', 'errornote').remove();
-			var form = by_id('comments').getElementsByTagName('form')[0];
 			form.innerHTML = "<div class='errornote'>Something wrong happened, please try again later!</div>" + form.innerHTML;
 		    }
 		});
