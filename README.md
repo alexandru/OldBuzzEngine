@@ -7,7 +7,7 @@ Engine, as a replacement for DISQUS and similar services.
 Working Example
 ---------------
 
-[http://alexn.org/test.html](http://alexn.org/test.html)
+[http://alexn.org/blog/2011/03/13/comments-up-and-running.html](http://alexn.org/blog/2011/03/13/comments-up-and-running.html)
 
 Details
 =======
