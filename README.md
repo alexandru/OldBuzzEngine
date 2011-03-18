@@ -7,7 +7,7 @@ Engine, as a replacement for DISQUS and similar services.
 Working Example
 ---------------
 
-[http://alexn.org/blog/2011/03/13/comments-up-and-running.html](http://alexn.org/blog/2011/03/13/comments-up-and-running.html)
+[http://thebuzzengine.appspot.com/#comments](http://thebuzzengine.appspot.com/#comments)
 
 Details
 =======
