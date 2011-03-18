@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TheBuzzEngine - About</title>    
+    <style type="text/css" media="screen">
+      html, body, * {
+	  margin: 0;
+	  padding: 0;
+      }
+      body {
+	  width: 640px;
+	  margin: auto;
+	  font-family: "Helvetica Neue", Helvetica, sans-serif;
+
+	  font-size: 18px;
+	  color: #444;
+	  padding-bottom: 50px;
+      }
+      #github {
+	  display: block;
+	  position: absolute;
+      }
+      #github {
+	  display: block;
+	  position: fixed;
+	  left: 0;
+	  top: 0;
+	  width: 151px;
+	  height: 151px;
+	  background-image: url(/static/images/fork-github.png);
+	  font-size: 1px;
+	  color: #fff;
+	  text-decoration: none;
+      }
+      h1 {
+	  color: #711B14;
+	  font-size: 25pt;
+	  margin-top: 20px;
+	  margin-bottom: 30px;
+      }
+      h2 {
+	  color: #9E251C;
+	  font-size: 20pt;
+	  margin-bottom: 10px;
+	  margin-top: 30px;
+      }
+      p {
+	  margin-bottom: 20px;
+      }
+      a {
+	  color: #2260B3;
+      }
+      ul {
+	  margin-left: 20px;
+      }
+      ul li {
+	  list-style-position: outside;	  
+	  margin-bottom: 10px;
+	  list-style: circle;
+      }
+
+      #comments {
+	  margin: 0;
+	  padding: 0;
+	  margin-top: 30px;
+	  font-size: 14px;
+      }
+      #comments .odd {
+	  background-color: #F0F0F0;
+      }
+      #comments .comment-item {
+	  padding: 10px;
+	  clear: both;
+      }
+      #comments .comment-item img {
+	  display: block;
+	  float: left;
+	  margin-right: 10px;
+      }
+      #comments .comment-item .author {
+	  font-size: 12px;
+	  font-weight: bold;
+	  margin-bottom: 5px;
+	  color: #333;
+      }
+      #comments .comment-item .author a {
+	  text-decoration: none;
+	  color: #2962A7;
+      }
+      #comments .comment-item .author a:hover {
+	  text-decoration: underline;
+      }
+      #comments .comment-item .content {
+	  min-height: 80px;
+	  max-width:  500px;
+	  float: left;
+      }
+      #comments .comment-item:after {
+	  display: block;
+	  content: ".";
+	  clear: both;
+	  height: 0;
+	  visibility: hidden;
+      }
+      #comments form {
+	  clear: both;
+	  margin-top: 20px;
+	  margin-left: 10px;
+      }
+      #comments form label {
+	  float: left;
+	  display: block;
+	  width: 85px;
+
+	  margin-top: 10px;
+	  color: #333;
+      }
+      #comments form input {
+	  border: 1px solid black;
+	  outline: 0;
+	  height: 20px;
+	  width: 296px;
+	  
+	  margin-top: 10px;
+	  clear: right;
+	  padding: 2px;
+      }
+      #comments form .help {
+	  display: block;
+	  margin-left: 90px;
+	  color: #666;
+	  font-size: 12px;
+      }
+      #comments form textarea {
+	  border: 1px solid black;
+	  width: 290px;
+	  height: 80px;
+	  outline: 0;
+	  margin-top: 10px;
+	  clear: right;    
+	  padding: 5px;
+      }
+      #comments form .required label {
+	  font-weight: bold;
+      }
+      #comments .errorlist {
+	  margin: 0;
+	  padding: 0;
+	  font-size: 12px;
+	  color: #9F3737;    
+      }
+      #comments .errorlist li {
+	  list-style: none;
+	  margin: 0;
+	  padding: 0;
+	  display: block;
+	  margin-left: 80px;
+      }
+      #comments .errorlist li:before {
+	  content: "- ";
+      }
+      #comments .errornote {
+	  font-weight: bold;
+	  color: #9F3737;        
+      }
+      #comments .loader {
+	  margin-left: 80px;
+      }
+      #comments .button {
+	  margin-left: 80px;
+	  width: 200px;
+	  height: 28px;
+	  line-height: 20px;
+	  font-size: 11pt;
+	  font-weight: bold;
+	  background-color: #d8d8d8;
+	  color: #111;
+	  border: 1px solid #888;
+	  border-radius: 5px;
+	  cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>TheBuzzEngine</h1>
+    <a id="github" href="https://github.com/alexandru/TheBuzzEngine">Fork me on GitHub</a>
+
+    <h2>Open-source commenting system</h2>
+
+    <p>
+      TheBuzzEngine is open-source software that brings visitors
+      comments to your webpage.
+    </p>
+
+    <h2>Why?</h2>
+
+    <p>
+      Content websites do not necessarily need complicated software
+      for publishing an article. You just need a <b>cheap</b> (or even
+      free) web-hosting solution for your static HTML content.  <a
+      href="http://pages.github.com/">GitHub Pages</a> are all the
+      rage amongst geeks these days.
+    </p>
+
+    <p>
+      Except that you need user-interaction with your content,
+      especially comments.
+    </p>
+
+    <h2>How much does it cost?</h2>
+
+    <p>
+      The software itself is free of charge and open-source. Hosting
+      is provided by <a href="http://code.google.com/appengine/"
+      target="_blank">Google's App Engine</a> and is also free of
+      charge for low-traffic websites (up to a quota). In practice the
+      popularity of your website will have to be huge before shelling
+      out a couple of bucks per month.
+    </p>
+
+    <h2>What about DISQUS or Facebook?</h2>
+
+    <ul>
+      <li>
+	content isn't yours, and in the case of Facebook moderation
+        of comments gets tricky
+      </li>
+      <li>
+         these are companies providing a service which may be
+         discontinued at some point. User comments are a valuable
+         part of your website that may vanish
+      </li>
+      <li>
+	Facebook isn't known for good ethics and DISQUS is too
+	young. If you value your users, placing bets on companies who
+	do not generate income directly from you is tricky and your
+	faith must be strong ;)
+      </li>
+      <li>
+        basically TheBuzzEngine is all about <b>control</b> and
+        <b>simplicity</b>
+      </li>
+    </ul>
+
+    <h2>Technicalities</h2>
+
+    <p>
+      The application is built to run on top of Google App
+      Engine. Scalability is theoretically unlimited and the usage
+      simple.
+    </p>
+
+    <p>
+      After setting up a Google App Engine account and deploying on
+      it, all you need to do is copy/paste a Javascript widget in your
+      web pages were you want comments.
+    </p>
+
+    <h2>I don't want to setup my own GAE account</h2>
+
+    <p>
+      I'm still thinking about making this app more end-user friendly
+      by letting people use my own setup. If you're interested, send
+      me an email.
+    </p>
+
+    <h2>Comments</h2>
+
+    <div id="comments" data-domain="thebuzzengine.appspot.com"></div>
+    <script language="javascript" type="text/javascript">
+      var BUZZENGINE_PARAMS = {
+	  article_url:   window.location + '',
+	  article_title: document.getElementsByTagName('title').length ?
+	      document.getElementsByTagName('title')[0].innerHTML : null
+      };
+
+      (function() {
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '/static/js/buzzengine.min.js';
+          var x = document.getElementsByTagName('script')[0];
+          x.parentNode.insertBefore(s, x);
+      })();      
+    </script>
+  </body>
+</html>

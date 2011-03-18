@@ -5,9 +5,9 @@ api_version: 1
 
 default_expiration: "30d"
 
-builtins:
-
-- datastore_admin: on
+builtins: 
+- remote_api: on 
+- datastore_admin: on 
 
 handlers:
 

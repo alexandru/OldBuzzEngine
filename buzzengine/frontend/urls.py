@@ -6,10 +6,9 @@ __email__     = "contact@alexn.org"
 
 
 from django.conf.urls.defaults import *
+from buzzengine.frontend import views
+
 
 urlpatterns = patterns('',
-    (r'^api/', include('buzzengine.api.urls')),
-    (r'', include('buzzengine.frontend.urls')),
+    (r'^$', views.homepage),
 )
-
-

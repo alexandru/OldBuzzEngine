@@ -18,7 +18,7 @@ class NewCommentForm(forms.Form):
     article_title = forms.CharField(required=False, widget=forms.HiddenInput)
 
     author_name  = forms.CharField(required=True,  label="Name")
-    author_email = forms.EmailField(required=False, label="Email")
+    author_email = forms.EmailField(required=True, label="Email")
     author_url   = forms.URLField(required=False,  label="URL")
     author_ip    = forms.CharField(required=False)
     

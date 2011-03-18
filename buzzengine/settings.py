@@ -10,6 +10,7 @@ MIDDLEWARE_CLASSES = (
 )
 INSTALLED_APPS = (
     'buzzengine.api',
+    'buzzengine.frontend',
 )
 TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, 'templates'),
