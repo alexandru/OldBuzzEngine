@@ -7,28 +7,22 @@ Engine, as a replacement for DISQUS and similar services.
 Working Example
 ---------------
 
-[http://thebuzzengine.appspot.com/#comments](http://thebuzzengine.appspot.com/#comments)
+[http://alexn.org/TheBuzzEngine/#comments](http://alexn.org/TheBuzzEngine/#comments)
 
 Details
 =======
 
 I tried to use [Disqus](http://disqus.com) for adding commenting to my
-blog pages; but frankly Disqus kind of sucks, as it is too complex,
-too hard to optimize and just provides too much. All I need is:
+blog pages; but Disqus is too complex and I need something simpler:
 
 - 4 fields: Name, Email, URL + Comment
 - Those 3 author-related fields should be tracked with a cookie and
-  auto-completed; no stinkin' Facebook / Twitter login for me
-- Gravatar for user images, and that's enough
-- Moderation with Askimet and/or manual approvals
+  auto-completed
+- Gravatar for user images
+- Moderation (editing or removing) by email
 - Fast, light
 
-TheBuzzEngine is an implementation for the above (having control over
-the source-code is gratifying); and it runs on Google's App Engine,
-which is both free of charge (for me, as I won't exceed the free
-quota) and infinitely scalable (at least for this type of problem).
-
-I just started working on it. Work in progress.
+TheBuzzEngine is an implementation for the above and it runs on Google's App Engine.
 
 Highlights
 ----------
@@ -48,12 +42,12 @@ App Engine Facilities used thus far:
 - tasks queue
 - sending email
 
-Missing
--------
+Browsers supported
+------------------
 
-Integration with Askimet + moderation interface are missing for
-now. Myself I'm relying on the App Engine's own admin interface, but
-it is suboptimal and I'm going to improve this.
+Tested with Chrome 5, Firefox 3.5, Opera 11, IExplorer 8, IExplorer 6.
 
-Only tested in Firefox + Chrome, but should work well in IExplorer and
-older browser. Still, more testing is neeed.
+In IExplorer &lt; 8 the commenting form is disabled (meaning only
+comments are shown). I may fix this, but incentive for me to fix it
+for IExplorer 6 is pretty low. If you want IExplorer 6, send me a note
+and I'll reconsider.
