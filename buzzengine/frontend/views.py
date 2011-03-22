@@ -15,4 +15,4 @@ from django.shortcuts import render_to_response
 from buzzengine.api import models
 
 def homepage(request):
-    return render_to_response("homepage.html")
+    return render_to_response("homepage.html", {'API_DOMAIN': request.API_DOMAIN})
