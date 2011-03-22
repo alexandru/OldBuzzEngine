@@ -1,0 +1,15 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+
+<h1>403 Forbidden</h1>
+<p>
+  You do not have permission to access this URL.
+</p>
+<p>
+  Logged in with: <b>{{ user.email }}</b>
+</p>
+<p>
+  <a href="{{ login_url }}">Log with another account</a>
+</p>
+
+{% endblock %}

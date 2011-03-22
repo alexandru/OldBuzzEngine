@@ -3,7 +3,7 @@
 </div>
 
 {% for obj in comments %}
-<div class="comment-row {% cycle even,odd %}">
+<div class="comment-row {% cycle even,odd %}" id="comment_{{ obj.id }}">
   <div class="comment-item {% cycle even,odd %}">
     <img src="{{ obj.author.gravatar_url }}" width="80" height="80" />
 

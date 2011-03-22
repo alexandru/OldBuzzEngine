@@ -1,0 +1,22 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+
+<h1>Delete Comment</h1>
+
+<form method="POST">
+  <input type="hidden" name="yes" value="1" />
+  <p>
+    <b>Article:</b> <a href="{{ comment.article.url }}">{{ comment.article.title|default:comment.article.url }}</a>
+  </p>
+  <p>
+    <b>Author:</b> <a href="{{ comment.author.url }}">{{ comment.author.name }}</a> {% if comment.author.email %}(<a href="mailto:{{ comment.author.email }}">{{ comment.author.email }}</a>){% endif %}
+  </p>
+  <p>
+    {{ comment.comment|escape|linebreaks }}
+  </p>
+  <p>
+    <input type="submit" value="Delete!" />
+  </p>
+</form>
+
+{% endblock %}

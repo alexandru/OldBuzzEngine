@@ -1,0 +1,13 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+
+<h1>Done editing ...</h1>
+
+<p>
+  <a href="{{ link }}">Back to editing form</a>
+</p>
+<p>
+  <a href="{{ comment.article.url }}#comment_{{ comment.key.id }}">View comment</a>
+</p>
+
+{% endblock %}

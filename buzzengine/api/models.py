@@ -23,6 +23,9 @@ class Article(db.Model):
 
     created_at = db.DateTimeProperty(auto_now_add=True)
 
+    def __unicode__(self):
+        return str(self.url)
+
 
 class Author(db.Model):
     name       = db.StringProperty(required=True)
@@ -30,6 +33,9 @@ class Author(db.Model):
     url        = db.StringProperty(required=False)    
     email_hash = db.StringProperty(required=False)
     created_at = db.DateTimeProperty(auto_now_add=True)
+
+    def __unicode__(self):
+        return "%s (%s)" % (self.name, self.email or "no email specified")
 
     def put(self):
         email = self.email and self.email.strip()
@@ -73,6 +79,11 @@ class Comment(db.Model):
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)    
 
+    def delete(self, *args, **kwargs):
+        # invalidates cache
+        memcache.delete(self.article.url, namespace='comments')
+        return super(Comment, self).delete(*args, **kwargs)
+
     def put(self, *args, **kwargs):
         obj = super(Comment, self).put(*args, **kwargs)
         # invalidates cache
@@ -87,7 +98,7 @@ class Comment(db.Model):
             article = Article.get_by_key_name(article_url)
             if article:
                 comments = Comment.gql("WHERE article = :1", article)
-                comments = [ {'comment': c.comment, 'created_at': c.created_at, "author": { "name": c.author.name, 'url': c.author.url, 'email': c.author.email, 'gravatar_url': c.author.gravatar_url }} for c in comments ]
+                comments = [ {'id': c.key().id(), 'comment': c.comment, 'created_at': c.created_at, "author": { "name": c.author.name, 'url': c.author.url, 'email': c.author.email, 'gravatar_url': c.author.gravatar_url }} for c in comments ]
             else:
                 comments = []
 

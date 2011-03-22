@@ -12,8 +12,8 @@ Author info:
 
 Administrative options:
 
-- edit:   http://{{ API_DOMAIN }}/admin/edit/?article_url={{ comment.article.article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
-- delete: http://{{ API_DOMAIN }}/admin/delete/?article_url={{ comment.article.article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
+- edit:   http://{{ API_DOMAIN }}/admin/edit/?article_url={{ article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
+- delete: http://{{ API_DOMAIN }}/admin/delete/?article_url={{ article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
 
 Thanks,
 
