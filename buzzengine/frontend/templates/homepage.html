@@ -13,7 +13,7 @@
 	  margin: auto;
 	  font-family: "Helvetica Neue", Helvetica, sans-serif;
 
-	  font-size: 18px;
+	  font-size: 16px;
 	  color: #444;
 	  padding-bottom: 50px;
       }
@@ -35,15 +35,18 @@
       }
       h1 {
 	  color: #711B14;
-	  font-size: 25pt;
+	  font-size: 23pt;
 	  margin-top: 20px;
 	  margin-bottom: 30px;
       }
       h2 {
 	  color: #9E251C;
-	  font-size: 20pt;
+	  font-size: 19pt;
 	  margin-bottom: 10px;
-	  margin-top: 30px;
+	  margin-top: 20px;
+      }
+      h3 {
+	  margin-bottom: 10px;
       }
       p {
 	  margin-bottom: 20px;
@@ -75,71 +78,52 @@
 
     <p>
       TheBuzzEngine is open-source software that brings visitors
-      comments to your webpage.
+      comments to your webpage. Simple, easy to setup, runs on top of
+      Google App Engine.
     </p>
 
-    <h2>Why?</h2>
+    <h2>Simplicity, Control</h2>
 
     <p>
-      Content websites do not necessarily need complicated software
-      for publishing an article. You just need a <b>cheap</b> (or even
-      free) web-hosting solution for your static HTML content.  <a
-      href="http://pages.github.com/">GitHub Pages</a> are all the
-      rage amongst geeks these days.
+      It's an alternative to DISQUS / Facebook widgets, but you own
+      the source-code and you can do whatever you want with the user's
+      content.
     </p>
 
+    <p>It's also fast and scalable.</p>
+
+    <h2>Installation</h2>
+
+    <h3>1. Get Started with Google App Engine</h3>
+
     <p>
-      Except that you need user-interaction with your content,
-      especially comments.
+      First <a href="http://code.google.com/appengine/downloads.html"
+      target="_blank">download the GAE Python SDK</a> and follow the
+      instructions on <a
+      href="http://code.google.com/appengine/docs/python/gettingstarted/"
+      target="_blank">getting started</a> in the Google App Engine
+      Docs.
     </p>
 
-    <h2>How much does it cost?</h2>
+    <h3>2. Deploy TheBuzzEngine on it</h3>
 
     <p>
-      The software itself is free of charge and open-source. Hosting
-      is provided by <a href="http://code.google.com/appengine/"
-      target="_blank">Google's App Engine</a> and is also free of
-      charge for low-traffic websites (up to a quota). In practice the
-      popularity of your website will have to be huge before shelling
-      out a couple of bucks per month.
+      <a
+      href="https://github.com/alexandru/TheBuzzEngine/zipball/master">Download
+      TheBuzzEngine</a>.  You will need to modify <a
+      href="https://github.com/alexandru/TheBuzzEngine/blob/master/app.yaml">appcfg.yml</a>
+      (the first line must have your App Engine application ID). You
+      will also need to modify <a
+      href="https://github.com/alexandru/TheBuzzEngine/blob/master/buzzengine/settings.py">settings.py</a>
+      -- the file has comments on what to modify.
     </p>
 
-    <h2>What about DISQUS or Facebook?</h2>
-
-    <ul>
-      <li>
-	content isn't yours, and in the case of Facebook moderation
-        of comments gets tricky
-      </li>
-      <li>
-         these are companies providing a service which may be
-         discontinued at some point. User comments are a valuable
-         part of your website that may vanish
-      </li>
-      <li>
-	Facebook isn't known for good ethics and DISQUS is too
-	young. If you value your users, placing bets on companies who
-	do not generate income directly from you is tricky and your
-	faith must be strong ;)
-      </li>
-      <li>
-        basically TheBuzzEngine is all about <b>control</b> and
-        <b>simplicity</b>
-      </li>
-    </ul>
-
-    <h2>Technicalities</h2>
+    <h3>3. Copy the Javascript widget to your blog/website</h3>
 
     <p>
-      The application is built to run on top of Google App
-      Engine. Scalability is theoretically unlimited and the usage
-      simple.
-    </p>
-
-    <p>
-      After setting up a Google App Engine account and deploying on
-      it, all you need to do is copy/paste a Javascript widget in your
-      web pages were you want comments.
+      Open the webpage for your App Engine instance in your browser.
+      If you deployed correctly it will give you the Javascript widget
+      that you need to copy/paste into your website.
     </p>
 
     <h2>I don't want to setup my own GAE account</h2>
