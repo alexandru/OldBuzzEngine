@@ -9,6 +9,17 @@ Working Example
 
 [http://alexn.org/TheBuzzEngine/#comments](http://alexn.org/TheBuzzEngine/#comments)
 
+Install
+=======
+
+1. download the [Google App Engine - Python SDK](http://code.google.com/appengine/downloads.html#Google_App_Engine_SDK_for_Python)
+2. create an instance on Google App Engine - check out their docs on [Getting Started](http://code.google.com/appengine/docs/python/gettingstarted) with Python
+3. fork this repo or download [an archive](https://github.com/alexandru/TheBuzzEngine/zipball/master)
+4. in [appcfg.yml](https://github.com/alexandru/TheBuzzEngine/blob/master/app.yaml) change the "application" (first line) to point to whatever App ID you created
+5. in [settings.py](https://github.com/alexandru/TheBuzzEngine/blob/master/buzzengine/settings.py) change ADMIN_EMAIL + EMAIL_SENDER (see comments)
+6. deploy and go to the homepage, which should look like (this one)[http://thebuzzengine.appspot.com/]
+7. follow the instructions in there (you just need to copy a Javascript widget in whatever page you want comments)
+
 Details
 =======
 

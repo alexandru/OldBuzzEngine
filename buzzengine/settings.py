@@ -1,5 +1,21 @@
 import os
 
+# when a new comment happens, 
+# this email address receives an alert
+ADMIN_EMAIL  = "contact@alexn.org"
+
+# FROM header of new message notifications.  Unfortunately it must be
+# an approved sender ... like the emails of admins you approve for the
+# GAE Application Instance.
+#
+# Some details here:
+#   http://code.google.com/appengine/docs/python/mail/sendingmail.html
+#
+EMAIL_SENDER = "TheBuzzEngine <me@alexn.org>"
+
+
+## Web framework specific stuff ...
+
 DEBUG = True
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -17,5 +33,4 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'buzzengine.urls'
 
-ADMIN_EMAIL  = "contact@alexn.org"
-EMAIL_SENDER = "TheBuzzEngine <me@alexn.org>"
+
