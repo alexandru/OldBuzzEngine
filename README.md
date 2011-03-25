@@ -25,8 +25,8 @@ blog pages; but Disqus is too complex and I needed something simpler:
 TheBuzzEngine is an implementation for the above and it runs on
 Google's App Engine.
 
-Cross-domain requests
----------------------
+Cross-domain, Cross-browser requests
+------------------------------------
 
 What I did is described in this article:
 [http://alexn.org/blog/2011/03/24/cross-domain-requests.html](http://alexn.org/blog/2011/03/24/cross-domain-requests.html)
