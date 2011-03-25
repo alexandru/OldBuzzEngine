@@ -77,9 +77,8 @@
     <h2>Open-source commenting system</h2>
 
     <p>
-      TheBuzzEngine is open-source software that brings visitors
-      comments to your webpage. Simple, easy to setup, runs on top of
-      Google App Engine.
+      TheBuzzEngine brings visitors comments to your webpage. Simple,
+      easy to setup, runs on top of Google App Engine.
     </p>
 
     <h2>Simplicity, Control</h2>
@@ -90,55 +89,16 @@
       content.
     </p>
 
-    <p>It's also fast and scalable.</p>
+    <p>It's also fast and scalable (as long as GAE is warm anyway)</p>
 
-    <h2>Installation</h2>
-
-    <h3>1. Get Started with Google App Engine</h3>
+    <h2>Download</h2>
 
     <p>
-      First <a href="http://code.google.com/appengine/downloads.html"
-      target="_blank">download the GAE Python SDK</a> and follow the
-      instructions on <a
-      href="http://code.google.com/appengine/docs/python/gettingstarted/"
-      target="_blank">getting started</a> in the Google App Engine
-      Docs.
+      Link: <a
+      href="https://github.com/alexandru/TheBuzzEngine/zipball/master">zip archive</a>.
     </p>
 
-    <h3>2. Deploy TheBuzzEngine on it</h3>
-
-    <p>
-      <a
-      href="https://github.com/alexandru/TheBuzzEngine/zipball/master">Download
-      TheBuzzEngine</a>.  You will need to modify <a
-      href="https://github.com/alexandru/TheBuzzEngine/blob/master/app.yaml">appcfg.yml</a>
-      (the first line must have your App Engine application ID). You
-      will also need to modify <a
-      href="https://github.com/alexandru/TheBuzzEngine/blob/master/buzzengine/settings.py">settings.py</a>
-      -- the file has comments on what to modify.
-    </p>
-
-    <h3>3. Copy the Javascript widget to your blog/website</h3>
-
-    <p>
-      Open the webpage for your App Engine instance in your browser.
-      If you deployed correctly it will give you the Javascript widget
-      that you need to copy/paste into your website.
-    </p>
-
-    <h2>I don't want to setup my own GAE account</h2>
-
-    <p>
-      I'm still thinking about making this app more end-user friendly
-      by letting people use my own setup. If you're interested, send
-      me an email.
-    </p>
-
-    <h2>Author</h2>
-
-    <p><a href="http://alexn.org/">Alexandru Nedelcu</a></p>
-
-    <h2>Comments</h2>
+    <h2>Sample</h2>
 
     <div id="comments" data-domain="thebuzzengine.appspot.com"></div>
     <script language="javascript" type="text/javascript">
@@ -152,10 +112,10 @@
           var s = document.createElement('script');
           s.type = 'text/javascript';
           s.async = true;
-          s.src = 'http://thebuzzengine.appspot.com/static/js/buzzengine.min.js';
+          s.src = 'http://thebuzzengine.appspot.com/static/js/buzzengine.min.js?dt=20110325';
           var x = document.getElementsByTagName('script')[0];
           x.parentNode.insertBefore(s, x);
-      })();      
+      })();
     </script>
   </body>
 </html>
