@@ -1,5 +1,8 @@
 (function () {
     var FILES_INCLUDED = {};
+    var FILES_LOADING  = {}; // for avoiding race conditions
+    var REGISTERED_CALLBACKS = {};
+
 
     function get_data_domain() {
 	var comments = document.getElementById("comments");
@@ -175,9 +178,36 @@
 	createCookie(name,"",-1);
     }
 
-    function include_js(file, callback) {
-	if (FILES_INCLUDED[file])
-	    return callback();
+    // used by async_load_javascript
+    function register_callback(file, callback) {
+	if (!REGISTERED_CALLBACKS[file])
+	    REGISTERED_CALLBACKS[file] = new Array();
+	REGISTERED_CALLBACKS[file].push(callback);
+    }
+
+    // used by async_load_javascript
+    function execute_callbacks(file) {
+	while (REGISTERED_CALLBACKS[file].length > 0) {
+	    var callback = REGISTERED_CALLBACKS[file].pop();
+	    if (callback) callback();
+	}
+    }
+
+    //
+    // Loads a Javascript file asynchronously, executing a `callback`
+    // if/when file gets loaded.
+    //
+    function async_load_javascript(file, callback) {
+	register_callback(file, callback);
+
+	if (FILES_INCLUDED[file]) {
+	    execute_callbacks(file);
+	    return true;
+	}
+	if (FILES_LOADING[file]) 
+	    return false;
+
+	FILES_LOADING[file] = true;
 
 	var html_doc = document.getElementsByTagName('head')[0];
 	js = document.createElement('script');
@@ -189,7 +219,7 @@
             if (js.readyState == 'complete' || js.readyState == 'loaded') {
 		if (! FILES_INCLUDED[file]) {
 		    FILES_INCLUDED[file] = true;
-		    callback();
+		    execute_callbacks(file);
 		}
             }
 	};
@@ -197,11 +227,11 @@
 	js.onload = function () {
 	    if (! FILES_INCLUDED[file]) {
 		FILES_INCLUDED[file] = true;
-		callback();
+		execute_callbacks(file);
 	    }
 	};
 
-	return false;	
+	return false;
     }
 
     function _ajax_with_flxhr(options) {
@@ -256,7 +286,7 @@
 
 	if (!xhr) {
 	    if (typeof flensed == 'undefined') {
-		include_js("http://" + get_data_domain() + "/static/js/flXHR/flXHR.js", function () {
+		async_load_javascript("http://" + get_data_domain() + "/static/js/flXHR/flXHR.js", function () {
 		    _ajax_with_flxhr(options);
 		});
 	    }

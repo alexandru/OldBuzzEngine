@@ -8,18 +8,21 @@ __email__     = "contact@alexn.org"
 import hashlib
 import re
 
+from urllib import quote
 from datetime import datetime, timedelta
 from django.utils import simplejson as json
 
+from google.appengine.api import users
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.template import RequestContext
 from buzzengine.api import models
 from buzzengine.frontend.decorators import requires_admin
 from buzzengine.frontend.forms import CommentForm
 
 
 def homepage(request):
-    return render_to_response("homepage.html", {'API_DOMAIN': request.API_DOMAIN})
+    return render_to_response("frontend/homepage.html", {'API_DOMAIN': request.API_DOMAIN})
 
 
 @requires_admin
@@ -28,24 +31,21 @@ def edit_comment(request):
     form = CommentForm(instance=comment)
 
     if request.method == "POST":
-        form = CommentForm(request.POST, instance=comment)
-        if form.is_valid():
-            form.save()
-            return render_to_response("admin/edit_done.html", {"link": request.get_full_path(), 'comment': comment})
+        if request.POST.get('delete'):
+            comment.delete()
 
-    return render_to_response("admin/edit.html", {"form": form, "comment": comment})
+            article_url = request.REQUEST.get('article_url')
+            if article_url.find('#') == -1:
+                article_url += '#comments'
 
+            return HttpResponseRedirect(article_url) 
+        else:
+            form = CommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                form.save()
+                return _render(request, "frontend/admin/edit.html", {"form": form, "comment": comment, 'message': 'Message saved!'})
 
-@requires_admin
-def delete_comment(request):
-    comment = _get_item(request)
-    article_url = comment.article.url
-
-    if request.method == "POST" and request.POST.get('yes'):
-        comment.delete()
-        return render_to_response("admin/delete_done.html", {"link": request.get_full_path(), 'article_url': article_url})
-
-    return render_to_response("admin/delete.html", {"link": request.get_full_path(), 'article_url': article_url, 'comment': comment})
+    return _render(request, "frontend/admin/edit.html", {"form": form, "comment": comment})
 
 
 def _get_item(request):
@@ -61,3 +61,8 @@ def _get_item(request):
 
     return comment
     
+
+def _render(request, tpl_name, kwargs):
+    kwargs['user'] = request.user
+    kwargs['logout_url'] = users.create_logout_url("/")
+    return render_to_response(tpl_name, kwargs)

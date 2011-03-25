@@ -9,6 +9,9 @@ builtins:
 - remote_api: on 
 - datastore_admin: on 
 
+inbound_services:
+- mail
+
 handlers:
 
 - url: /crossdomain.xml
@@ -21,6 +24,10 @@ handlers:
 
 - url: /static
   static_dir: buzzengine/static  
+
+- url: /_ah/mail/.+ 
+  script: buzzengine/email_handler.py 
+  login: admin
 
 - url: /.*
   script: buzzengine/handler.py

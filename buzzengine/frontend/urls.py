@@ -12,5 +12,4 @@ from buzzengine.frontend import views
 urlpatterns = patterns('',
     (r'^$', views.homepage),
     (r'^admin/edit/$', views.edit_comment),
-    (r'^admin/delete/$', views.delete_comment),
 )

@@ -10,12 +10,8 @@ Author info:
 - url:   {{ author.url }}
 - ip:    {{ comment.author_ip }}
 
-Administrative options:
-
-- edit:   http://{{ API_DOMAIN }}/admin/edit/?article_url={{ article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
-- delete: http://{{ API_DOMAIN }}/admin/delete/?article_url={{ article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
-
-Thanks,
+To edit or delete comment:
+    http://{{ API_DOMAIN }}/admin/edit/?article_url={{ article_url|urlencode }}&comment_id={{ comment.key.id|urlencode }}
 
 --
 TheBuzzEngine

@@ -17,7 +17,5 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'buzzengine.urls'
 
-
 ADMIN_EMAIL  = "contact@alexn.org"
-EMAIL_SENDER = "TheBuzzEngine <me@alexn.org>"
-
+EMAIL_SENDER = "TheBuzzEngine <noreply@thebuzzengine.appspot.com>"

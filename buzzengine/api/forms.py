@@ -31,6 +31,9 @@ class NewCommentForm(forms.Form):
         article_title = data.get('article_title') or data.get('article_url')
 
         article = models.Article.get_or_insert(article_url, url=article_url, title=article_title)
+        if article.title != article_title:
+            article.title = article_title
+            article.put()
 
         author_email = data.get('author_email')
         author_name  = data.get('author_name') 

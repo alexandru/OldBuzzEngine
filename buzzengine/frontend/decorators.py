@@ -20,7 +20,7 @@ def requires_admin(view):
             return HttpResponseRedirect(users.create_login_url(uri))
 
         if not users.is_current_user_admin():
-            resp = render_to_response("admin/login_required.html", {'login_url': users.create_login_url(uri), 'user': user})
+            resp = render_to_response("frontend/admin/login_required.html", {'login_url': users.create_login_url(uri), 'user': user})
             resp.status_code = 403
             return resp
 

@@ -37,7 +37,7 @@ class HttpControlMiddleware(object):
     def process_response(self, request, response):
         origin = request.ROOT_DOMAIN
         if origin:
-            response['Access-Control-Allow-Origin'] = origin
+            response['Access-Control-Allow-Origin'] = origin or "*"
             response['Access-Control-Allow-Credentials'] = 'true'
             response['Access-Control-Allow-Headers'] = 'Content-Type, *'
             response['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'

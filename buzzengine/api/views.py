@@ -101,6 +101,8 @@ def _discover_user_ip(request):
             pass
     return ip
 
+def say_hello(request):    
+    return HttpResponse("TheBuzzEngine greeted with %s, says hello!" % request.method, mimetype="text/plain")
 
 def test_page(request):
     return render_to_response("api/test_page.html", { 'API_DOMAIN': request.API_DOMAIN })

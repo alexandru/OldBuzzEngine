@@ -1,10 +1,9 @@
-{% extends "admin/layout.html" %}
+{% extends "frontend/admin/layout.html" %}
 {% block content %}
 
-<h1>Delete Comment</h1>
+<h2>Edit Comment</h2>
 
-<form method="POST">
-  <input type="hidden" name="yes" value="1" />
+<form method="POST" id="editform">
   <p>
     <b>Article:</b> <a href="{{ comment.article.url }}">{{ comment.article.title|default:comment.article.url }}</a>
   </p>
@@ -12,10 +11,15 @@
     <b>Author:</b> <a href="{{ comment.author.url }}">{{ comment.author.name }}</a> {% if comment.author.email %}(<a href="mailto:{{ comment.author.email }}">{{ comment.author.email }}</a>){% endif %}
   </p>
   <p>
-    {{ comment.comment|escape|linebreaks }}
+    <b>IP:</b> {{ comment.author_ip }}
   </p>
   <p>
-    <input type="submit" value="Delete!" />
+    {{ form.comment }}
+    {% if form.comment.errors %}{{ form.comment.errors }}{% endif %}
+  </p>
+  <p>
+    <input type="submit" name="save" value="Save Comment" class="buttonsave" />
+    <input type="submit" name="delete" value="Delete Comment" class="buttondelete" />
   </p>
 </form>
 
