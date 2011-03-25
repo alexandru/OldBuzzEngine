@@ -17,8 +17,8 @@ Install
 3. fork this repo or download [an archive](https://github.com/alexandru/TheBuzzEngine/zipball/master)
 4. in [appcfg.yml](https://github.com/alexandru/TheBuzzEngine/blob/master/app.yaml) change the "application" (first line) to point to whatever App ID you created
 5. in [settings.py](https://github.com/alexandru/TheBuzzEngine/blob/master/buzzengine/settings.py) change ADMIN_EMAIL + EMAIL_SENDER (see comments)
-6. deploy and go to the homepage, which should look like (this one)[http://thebuzzengine.appspot.com/]
-7. follow the instructions in there (you just need to copy a Javascript widget in whatever page you want comments)
+6. deploy and go to the homepage, which should look like (this one)[http://thebuzzengine.appspot.com/] -- check out this doc on how to [Upload an Application](http://code.google.com/appengine/docs/python/gettingstarted/uploading.html) to GAE
+7. follow the instructions in your app's homepage (you just need to copy a Javascript widget in whatever page you want comments)
 
 Details
 =======
