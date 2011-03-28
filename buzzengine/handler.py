@@ -4,6 +4,8 @@
 __author__    = "Alexandru Nedelcu"
 __email__     = "contact@alexn.org"
 
+
+import logging
 import os,sys
 os.environ['DJANGO_SETTINGS_MODULE'] = 'buzzengine.settings'
 
@@ -19,9 +21,12 @@ import django.core.signals
 import django.db
 import django.dispatch.dispatcher
 
+def log_exception(*args, **kwds):
+   logging.exception('Exception in request:')
+
 # Log errors.
-#django.dispatch.dispatcher.connect(
-#   log_exception, django.core.signals.got_request_exception)
+django.dispatch.dispatcher.connect(
+   log_exception, django.core.signals.got_request_exception)
 
 # Unregister the rollback event handler.
 django.dispatch.dispatcher.disconnect(

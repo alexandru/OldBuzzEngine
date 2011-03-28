@@ -36,6 +36,16 @@ blog pages; but Disqus is too complex and I needed something simpler:
 TheBuzzEngine is an implementation for the above and it runs on
 Google's App Engine.
 
+Roadmap
+-------
+
+The following features are planned:
+
+- email subscriptions to replies in a thread
+- threaded replies to comments (only 1 level)
+- Askimet integration for spam filtering
+- better admin (email moderation is OK for low traffic, but better control and filtering required)
+
 Cross-domain, Cross-browser requests
 ------------------------------------
 

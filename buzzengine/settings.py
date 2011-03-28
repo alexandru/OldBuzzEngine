@@ -16,7 +16,7 @@ EMAIL_SENDER = "TheBuzzEngine <me@alexn.org>"
 
 ## Web framework specific stuff ...
 
-DEBUG = True
+DEBUG = False
 ROOT_PATH = os.path.dirname(__file__)
 
 MIDDLEWARE_CLASSES = (

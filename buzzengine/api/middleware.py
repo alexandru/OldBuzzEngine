@@ -17,8 +17,13 @@ class TrackingMiddleware:
         else:
             request.author = None
 
+
 class HttpControlMiddleware(object):
-    def process_request(self, request):
+
+    def _do_process_request(self, request):
+        if hasattr(request, 'ROOT_DOMAIN') and hasattr(request, 'API_DOMAIN'):
+            return
+
         url    = request.REQUEST.get('article_url') or request.META.get('HTTP_REFERER')
         host   = None
         origin = None
@@ -33,13 +38,25 @@ class HttpControlMiddleware(object):
 
         request.API_DOMAIN  = host
         request.ROOT_DOMAIN = origin
+        
+
+    def process_request(self, request):
+        self._do_process_request(request)
+
 
     def process_response(self, request, response):
-        origin = request.ROOT_DOMAIN
+        # for some weird reason, ROOT_DOMAIN sometimes is not set,
+        # although process_request should always be called before
+        # process_response
+
+        self._do_process_request(request)        
+        origin = request.ROOT_DOMAIN if hasattr(request, 'ROOT_DOMAIN') else None
+
         if origin:
             response['Access-Control-Allow-Origin'] = origin or "*"
             response['Access-Control-Allow-Credentials'] = 'true'
             response['Access-Control-Allow-Headers'] = 'Content-Type, *'
             response['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
             response['Access-Control-Max-Age'] = '111111'
+
         return response
