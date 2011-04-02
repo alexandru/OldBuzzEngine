@@ -105,7 +105,8 @@
     color: #9F3737;        
 }
 #comments .loader {
-    margin-left: 80px;
+    margin-left: 90px;
+    margin-top:  20px;
 }
 #comments .button {
     margin-left: 80px;

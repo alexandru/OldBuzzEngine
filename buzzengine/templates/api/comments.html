@@ -23,54 +23,52 @@
 </div>
 {% endfor %}
 
-<div class="form-row">
-  <form action="http://{{ API_DOMAIN }}/api/comments/" method="POST">
-    {% if form.errors %}
-    <div class="errornote">Cannot send comment. Please correct the errors below!</div>
+<form action="http://{{ API_DOMAIN }}/api/comments/" method="POST" style="display:none">
+  {% if form.errors %}
+  <div class="errornote">Cannot send comment. Please correct the errors below!</div>
+  {% endif %}
+
+  {{ form.article_url }}
+  {{ form.article_title }}
+
+  <div class="field required">
+    <label for="author_name">Name:</label>
+    {{ form.author_name }}
+
+    {% if form.author_name.errors %}
+    {{ form.author_name.errors }}
     {% endif %}
+  </div>
 
-    {{ form.article_url }}
-    {{ form.article_title }}
+  <div class="field required">
+    <label for="author_email">Email:</label>
+    {{ form.author_email }}
+    <span class="help">Your email is safe, it won't get published</span>
 
-    <div class="field required">
-      <label for="author_name">Name:</label>
-      {{ form.author_name }}
+    {% if form.author_email.errors %}
+    {{ form.author_email.errors }}
+    {% endif %}
+  </div>
 
-      {% if form.author_name.errors %}
-      {{ form.author_name.errors }}
-      {% endif %}
-    </div>
+  <div class="field">
+    <label for="author_url">URL:</label>
+    {{ form.author_url }}
 
-    <div class="field required">
-      <label for="author_email">Email:</label>
-      {{ form.author_email }}
-      <span class="help">Your email is safe, it won't get published</span>
+    {% if form.author_url.errors %}
+    {{ form.author_url.errors }}
+    {% endif %}
+  </div>
 
-      {% if form.author_email.errors %}
-      {{ form.author_email.errors }}
-      {% endif %}
-    </div>
+  <div class="field required">
+    <label for="comment">Comment:</label>
+    {{ form.comment }}
+    <span class="help">No HTML allowed, just plain text.</span>
 
-    <div class="field">
-      <label for="author_url">URL:</label>
-      {{ form.author_url }}
+    {% if form.comment.errors %}
+    {{ form.comment.errors }}
+    {% endif %}
+  </div>
 
-      {% if form.author_url.errors %}
-      {{ form.author_url.errors }}
-      {% endif %}
-    </div>
-
-    <div class="field required">
-      <label for="comment">Comment:</label>
-      {{ form.comment }}
-      <span class="help">No HTML allowed, just plain text.</span>
-
-      {% if form.comment.errors %}
-      {{ form.comment.errors }}
-      {% endif %}
-    </div>
-
-    <div class="loader" style="display:none;"><img src="http://{{ API_DOMAIN }}/static/images/ajax-loader.gif" /></div>
-    <input type="submit" value="Send Comment" class="button" />
-  </form>
-</div>
+  <div class="loader" style="display:none;"><img src="http://{{ API_DOMAIN }}/static/images/ajax-loader.gif" /></div>
+  <input type="submit" value="Send Comment" class="button" />
+</form>
