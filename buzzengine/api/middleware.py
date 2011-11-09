@@ -24,13 +24,16 @@ class HttpControlMiddleware(object):
         if hasattr(request, 'ROOT_DOMAIN') and hasattr(request, 'API_DOMAIN'):
             return
 
-        url    = request.REQUEST.get('article_url') or request.META.get('HTTP_REFERER')
-        host   = None
-        origin = None
+        url     = request.REQUEST.get('article_url') or request.META.get('HTTP_REFERER')
+        rorigin = request.REQUEST.get('origin')
+        host    = None
+        origin  = None
 
         if url:
             origin = re.findall('^(https?://[^/]+)', url)
             origin = origin[0] if origin else None
+        elif rorigin and re.match('^https?://[^/]+$', rorigin):
+            origin = rorigin
 
         host = request.META['SERVER_NAME']
         if str(request.META.get('SERVER_PORT')) != str(80):
