@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     (r'^comments/$', views.comments),
     (r'^notify/$', tasks.notify),
     (r'^test/page.html$', views.test_page),
+    (r'^export/$', views.export_xml),
 )

@@ -110,3 +110,53 @@ def test_page(request):
 
 def crossdomain_xml(request):
     return HttpResponseRedirect("/static/local-policy.xml")
+
+def export_xml(request):
+    articles = models.Article.all()
+    output = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dsq="http://www.disqus.com/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wp="http://wordpress.org/export/1.0/" >
+  <channel>
+"""
+    for article in articles:
+        output += "   <item>\n"
+        output += """
+      <title>%s</title>
+      <link>%s</link>
+      <dsq:thread_identifier>%s</dsq:thread_identifier>
+      <wp:post_date_gmt>%s</wp:post_date_gmt>
+      <wp:comment_status>open</wp:comment_status>
+""" % (article.title or article.url, article.url or '', article.url or '', article.created_at.strftime("%Y-%m-%d %H:%M:%S"))
+
+        comments = models.Comment.get_comments(article.url)
+        for comment in comments:
+            output += "      <wp:comment>\n"
+            output += "      </wp:comment>\n"
+            output += """
+        <wp:comment_id>%s</wp:comment_id>
+        <wp:comment_author>%s</wp:comment_author>
+        <wp:comment_author_email>%s</wp:comment_author_email>
+        <wp:comment_author_url>%s</wp:comment_author_url>
+        <wp:comment_date_gmt>%s</wp:comment_date_gmt>
+        <wp:comment_content><![CDATA[%s]]></wp:comment_content>
+        <wp:comment_approved>1</wp:comment_approved>
+        <wp:comment_parent>0</wp:comment_parent>""" % (
+
+                comment['id'],
+                comment['author'].get('name') or '',
+                comment['author'].get('email') or '',
+                comment['author'].get('url') or '',
+                comment['created_at'].strftime('%Y-%m-%d %H:%M:%S'),
+                comment['comment'],
+                
+            )
+
+
+        output += "   </item>\n"
+
+    output += """  </channel>
+</rss>"""
+
+    return HttpResponse(output, mimetype="text/plain")
+
+        
+
