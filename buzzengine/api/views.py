@@ -130,7 +130,6 @@ def export_xml(request):
         comments = models.Comment.get_comments(article.url)
         for comment in comments:
             output += "      <wp:comment>\n"
-            output += "      </wp:comment>\n"
             output += """
         <wp:comment_id>%s</wp:comment_id>
         <wp:comment_author>%s</wp:comment_author>
@@ -149,7 +148,7 @@ def export_xml(request):
                 comment['comment'],
                 
             )
-
+            output += "      </wp:comment>\n"
 
         output += "   </item>\n"
 
