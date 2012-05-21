@@ -11,7 +11,7 @@ ADMIN_EMAIL  = "contact@alexn.org"
 # Some details here:
 #   http://code.google.com/appengine/docs/python/mail/sendingmail.html
 #
-EMAIL_SENDER = "TheBuzzEngine <me@alexn.org>"
+EMAIL_SENDER = "TheBuzzEngine <messages@thebuzzengine.com>"
 
 
 ## Web framework specific stuff ...
