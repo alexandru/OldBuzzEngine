@@ -1,34 +1,25 @@
-application: thebuzzengine
+application: thebuzzengine2
 version: 1
-runtime: python
+runtime: python27
 api_version: 1
+threadsafe: true
 
-default_expiration: "30d"
-
-builtins: 
-- remote_api: on 
-- datastore_admin: on 
-
-inbound_services:
-- mail
+builtins:
+- deferred: on
+- remote_api: on
 
 handlers:
+- url: /api/.*
+  script: main.app
 
-- url: /crossdomain.xml
-  static_files: buzzengine/static/load-policy.xml
-  upload:  buzzengine/static/load-policy.xml
+- url: /
+  static_files: static/index.html
+  upload: static/index.html
 
-- url: /favicon.ico
-  static_files: buzzengine/static/images/favicon.ico
-  upload:  buzzengine/static/images/favicon.ico
+- url: /(.*)
+  static_files: static/\1
+  upload: static/
 
-- url: /static
-  static_dir: buzzengine/static  
-
-- url: /_ah/mail/.+ 
-  script: buzzengine/email_handler.py 
-  login: admin
-
-- url: /.*
-  script: buzzengine/handler.py
-
+libraries:
+- name: django
+  version: "1.4"

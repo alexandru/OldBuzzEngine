@@ -1,18 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-__author__    = "Alexandru Nedelcu"
-__email__     = "contact@alexn.org"
-
-
-from django.conf.urls.defaults import *
-from buzzengine.api import views 
-from buzzengine.api import tasks
+from django.conf.urls.defaults import patterns
+from buzzengine.api import views
 
 urlpatterns = patterns('',
-    (r'^hello/$', views.say_hello),
-    (r'^comments/$', views.comments),
-    (r'^notify/$', tasks.notify),
-    (r'^test/page.html$', views.test_page),
-    (r'^export/$', views.export_xml),
+    (r'^test-email/$', views.send_test_email),
+    (r'^test-session/$', views.test_session),
 )
