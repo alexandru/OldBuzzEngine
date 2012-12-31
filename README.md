@@ -4,11 +4,6 @@ About
 TheBuzzEngine is a simple commenting system, designed for Google App
 Engine, as a replacement for DISQUS and similar services.
 
-Working Example
----------------
-
-[http://alexn.org/TheBuzzEngine/#comments](http://alexn.org/TheBuzzEngine/#comments)
-
 Install
 =======
 
