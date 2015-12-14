@@ -4,6 +4,8 @@ About
 TheBuzzEngine is a simple commenting system, designed for Google App
 Engine, as a replacement for DISQUS and similar services.
 
+NOTE: THIS REPO IS CURRENTLY UNMAINTAINED. New development happens at [alexandru/buzzengine](https://github.com/alexandru/buzzengine/), but I switched the technological stack (the JVM, Scala, regular RDBMS) and it isn't meant to be deployed on Google's App Engine anymore. If anybody is interested in maintaining this repository, let me know.
+
 Install
 =======
 
