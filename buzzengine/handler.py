@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__    = "Alexandru Nedelcu"
-__email__     = "contact@alexn.org"
+__email__     = "noreply@alexn.org"
 
 
 import logging
