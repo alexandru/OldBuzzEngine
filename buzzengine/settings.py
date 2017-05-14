@@ -2,7 +2,7 @@ import os
 
 # when a new comment happens, 
 # this email address receives an alert
-ADMIN_EMAIL  = "contact@alexn.org"
+ADMIN_EMAIL  = "buzzengine@volatile1612.alexn.org"
 
 # FROM header of new message notifications.  Unfortunately it must be
 # an approved sender ... like the emails of admins you approve for the
