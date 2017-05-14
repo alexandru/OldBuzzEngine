@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 __author__    = "Alexandru Nedelcu"
-__email__     = "contact@alexn.org"
+__email__     = "noreply@alexn.org"
 
 
 import re
@@ -21,12 +21,12 @@ class NewCommentForm(forms.Form):
     author_email = forms.EmailField(required=True, label="Email")
     author_url   = forms.URLField(required=False,  label="URL")
     author_ip    = forms.CharField(required=False)
-    
+
     comment = forms.CharField(required=True, widget=forms.Textarea(attrs={'cols': 30, 'rows': 3}))
 
     def save(self):
         data = self.clean_data
-        
+
         article_url = data.get('article_url')
         article_title = data.get('article_title') or data.get('article_url')
 
@@ -36,14 +36,14 @@ class NewCommentForm(forms.Form):
             article.put()
 
         author_email = data.get('author_email')
-        author_name  = data.get('author_name') 
-        author_url   = data.get('author_url')  
+        author_name  = data.get('author_name')
+        author_url   = data.get('author_url')
         author_ip    = data.get('author_ip')
         author_key   = (author_email or '') + author_name
 
         author = models.Author.get_or_insert(author_key, name=author_name)
         has_changes = False
-        
+
         if author.url != author_url and author_url:
             author.url = author_url
             has_changes = True
@@ -66,7 +66,7 @@ class NewCommentForm(forms.Form):
         self._comment = comment
 
         return comment
-        
+
     @property
     def output(self):
         return {
